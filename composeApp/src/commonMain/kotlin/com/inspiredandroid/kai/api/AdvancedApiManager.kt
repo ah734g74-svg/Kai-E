@@ -61,7 +61,7 @@ class AdvancedApiManager(private val appSettings: AppSettings) {
         val raw = appSettings.settings.getString(KEY_API_KEYS, "")
         val keys = if (raw.isNotEmpty()) {
             try {
-                json.decodeFromString(raw)
+                json.decodeFromString<List<ApiKey>>(raw)
             } catch (_: Exception) {
                 emptyList()
             }
@@ -75,7 +75,7 @@ class AdvancedApiManager(private val appSettings: AppSettings) {
         val raw = appSettings.settings.getString(KEY_API_ENDPOINTS, "")
         val endpoints = if (raw.isNotEmpty()) {
             try {
-                json.decodeFromString(raw)
+                json.decodeFromString<List<ApiEndpoint>>(raw)
             } catch (_: Exception) {
                 emptyList()
             }

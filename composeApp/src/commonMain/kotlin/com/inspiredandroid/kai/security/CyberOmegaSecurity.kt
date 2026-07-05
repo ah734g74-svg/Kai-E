@@ -73,7 +73,7 @@ class CyberOmegaSecurity(private val appSettings: AppSettings) {
         val raw = appSettings.settings.getString(KEY_SESSIONS, "")
         val sessions = if (raw.isNotEmpty()) {
             try {
-                json.decodeFromString(raw)
+                json.decodeFromString<List<CyberOmegaSession>>(raw)
             } catch (_: Exception) {
                 emptyList()
             }
@@ -87,7 +87,7 @@ class CyberOmegaSecurity(private val appSettings: AppSettings) {
         val raw = appSettings.settings.getString(KEY_REQUESTS, "")
         val requests = if (raw.isNotEmpty()) {
             try {
-                json.decodeFromString(raw)
+                json.decodeFromString<List<AccessRequest>>(raw)
             } catch (_: Exception) {
                 emptyList()
             }

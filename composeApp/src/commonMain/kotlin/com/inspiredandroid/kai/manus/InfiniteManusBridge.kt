@@ -103,7 +103,7 @@ class InfiniteManusBridge(private val appSettings: AppSettings) {
         val raw = appSettings.settings.getString(KEY_MANUS_CONNECTION, "")
         return if (raw.isNotEmpty()) {
             try {
-                json.decodeFromString(raw)
+                json.decodeFromString<ManusConnectionConfig>(raw)
             } catch (_: Exception) {
                 ManusConnectionConfig()
             }
@@ -116,7 +116,7 @@ class InfiniteManusBridge(private val appSettings: AppSettings) {
         val raw = appSettings.settings.getString(KEY_MANUS_KEYS, "")
         val keys = if (raw.isNotEmpty()) {
             try {
-                json.decodeFromString(raw)
+                json.decodeFromString<List<ManusConnectionKey>>(raw)
             } catch (_: Exception) {
                 emptyList()
             }

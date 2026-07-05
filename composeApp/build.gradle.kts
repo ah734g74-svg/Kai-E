@@ -39,13 +39,7 @@ kotlin {
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
             baseName = "ComposeApp"
-            // Dynamic so LiteRT-LM's `-Xlinker -all_load` (in its Package.swift) doesn't
-            // sweep up ComposeApp's static archive too and trip thousands of duplicate
-            // symbols at link time. Each framework gets its own link context.
             isStatic = false
-            // Must differ from the iosApp bundle identifier — iOS refuses to install a
-            // .app whose embedded framework shares its parent's identifier (MIInstaller
-            // error 57 / DuplicateIdentifier).
             binaryOption("bundleId", "com.inspiredandroid.kai.composeapp")
         }
     }
@@ -62,7 +56,6 @@ kotlin {
                 outputFileName = "composeApp.js"
                 devServer =
                     (devServer ?: KotlinWebpackConfig.DevServer()).apply {
-                        // Serve sources to debug inside browser
                         static(rootDirPath)
                         static(projectDirPath)
                     }
@@ -192,9 +185,6 @@ compose.desktop {
     }
 }
 
-// BouncyCastle is a cryptographically signed JCE provider jar. ProGuard rewrites
-// it and strips the META-INF signatures, causing "SHA-256 digest error" at
-// runtime. After ProGuard finishes, replace the processed jar with the original.
 afterEvaluate {
     tasks.matching { it.name == "proguardReleaseJars" }.configureEach {
         doLast {
@@ -219,7 +209,6 @@ class VersionGeneratorPlugin : Plugin<Project> {
         project.afterEvaluate {
             val appVersion = libs.versions.appVersion.get()
 
-            // Generate Kotlin version file
             val versionFile =
                 layout.buildDirectory
                     .file("generated/src/commonMain/kotlin/com/inspiredandroid/kai/Version.kt")
@@ -236,7 +225,6 @@ class VersionGeneratorPlugin : Plugin<Project> {
                 """.trimIndent(),
             )
 
-            // Update iOS Config.xcconfig with version
             val xcConfigFile = rootProject.file("iosApp/Configuration/Config.xcconfig")
             if (xcConfigFile.exists()) {
                 val content = xcConfigFile.readText()

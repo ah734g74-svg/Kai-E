@@ -83,7 +83,7 @@ class InfiniteTerminalEngine(
         val raw = appSettings.settings.getString(KEY_TERMINAL_SESSIONS, "")
         val sessions = if (raw.isNotEmpty()) {
             try {
-                json.decodeFromString(raw)
+                json.decodeFromString<List<TerminalSession>>(raw)
             } catch (_: Exception) {
                 emptyList()
             }
@@ -97,7 +97,7 @@ class InfiniteTerminalEngine(
         val raw = appSettings.settings.getString(KEY_TERMINAL_HISTORY, "")
         val history = if (raw.isNotEmpty()) {
             try {
-                json.decodeFromString(raw)
+                json.decodeFromString<List<TerminalCommand>>(raw)
             } catch (_: Exception) {
                 emptyList()
             }
