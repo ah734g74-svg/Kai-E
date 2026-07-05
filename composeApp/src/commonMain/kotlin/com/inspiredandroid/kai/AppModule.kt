@@ -23,6 +23,9 @@ import com.inspiredandroid.kai.data.SelfEvolutionEngine
 import com.inspiredandroid.kai.data.OmegaExecutionEngine
 import com.inspiredandroid.kai.cloud.CloudComputerManager
 import com.inspiredandroid.kai.api.AdvancedApiManager
+import com.inspiredandroid.kai.manus.InfiniteManusBridge
+import com.inspiredandroid.kai.ai.InfiniteAiAccess
+import com.inspiredandroid.kai.cloud.InfiniteCloudComputer
 import com.inspiredandroid.kai.notifications.NotificationReader
 import com.inspiredandroid.kai.skills.SkillManager
 import com.inspiredandroid.kai.sms.SmsPoller
@@ -119,6 +122,15 @@ val appModule = module {
     }
     single<AdvancedApiManager> {
         AdvancedApiManager(get())
+    }
+    single<InfiniteManusBridge> {
+        InfiniteManusBridge(get())
+    }
+    single<InfiniteAiAccess> {
+        InfiniteAiAccess(get())
+    }
+    single<InfiniteCloudComputer> {
+        InfiniteCloudComputer(get())
     }
     single<SkillManager> {
         SkillManager(get<SandboxController>())
