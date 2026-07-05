@@ -29,6 +29,9 @@ import com.inspiredandroid.kai.ai.InfiniteAiAccess
 import com.inspiredandroid.kai.cloud.InfiniteCloudComputer
 import com.inspiredandroid.kai.terminal.InfiniteTerminalEngine
 import com.inspiredandroid.kai.access.ZeroLimitAccess
+import com.inspiredandroid.kai.security.CyberOmegaSecurity
+import com.inspiredandroid.kai.audit.DeepCodeAuditor
+import com.inspiredandroid.kai.resources.InfiniteResourceEngine
 import com.inspiredandroid.kai.notifications.NotificationReader
 import com.inspiredandroid.kai.skills.SkillManager
 import com.inspiredandroid.kai.sms.SmsPoller
@@ -143,6 +146,15 @@ val appModule = module {
     }
     single<InfiniteTerminalEngine> {
         InfiniteTerminalEngine(get(), get<SelfEvolutionEngine>(), get<OmegaExecutionEngine>())
+    }
+    single<CyberOmegaSecurity> {
+        CyberOmegaSecurity(get())
+    }
+    single<DeepCodeAuditor> {
+        DeepCodeAuditor(get())
+    }
+    single<InfiniteResourceEngine> {
+        InfiniteResourceEngine(get())
     }
     single<SkillManager> {
         SkillManager(get<SandboxController>())
