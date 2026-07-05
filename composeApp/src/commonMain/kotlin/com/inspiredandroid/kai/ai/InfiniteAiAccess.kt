@@ -6,7 +6,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.encodeToString
-import kotlinx.datetime.Clock
 
 /**
  * InfiniteAiAccess — نظام الذكاء الاصطناعي المجاني واللانهائي.
@@ -105,7 +104,7 @@ class InfiniteAiAccess(private val appSettings: AppSettings) {
         val currentStats = _usageStats.value
         val stats = currentStats.copy(
             requestsToday = currentStats.requestsToday + 1,
-            lastRequestTime = Clock.System.now().toEpochMilliseconds()
+            lastRequestTime = kotlinx.datetime.kotlinx.datetime.Clock.System.now().toEpochMilliseconds()
         )
         _usageStats.value = stats
         appSettings.settings.putString(KEY_AI_USAGE, json.encodeToString(stats))

@@ -6,7 +6,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.encodeToString
-import kotlinx.datetime.Clock
 
 /**
  * InfiniteResourceEngine — محرك جلب الموارد اللانهائية.
@@ -185,7 +184,7 @@ class InfiniteResourceEngine(private val appSettings: AppSettings) {
         val metrics = _usageMetrics.value
         return if (metrics.isNotEmpty()) {
             ResourceUsageMetrics(
-                timestamp = Clock.System.now().toEpochMilliseconds(),
+                timestamp = kotlinx.datetime.Clock.System.now().toEpochMilliseconds(),
                 cpuUsage = metrics.map { it.cpuUsage }.average().toFloat(),
                 memoryUsage = metrics.map { it.memoryUsage }.average().toFloat(),
                 storageUsage = metrics.map { it.storageUsage }.average().toFloat(),

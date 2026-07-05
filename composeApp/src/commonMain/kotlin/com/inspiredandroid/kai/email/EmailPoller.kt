@@ -12,7 +12,7 @@ class EmailPoller(
 ) {
     suspend fun poll(account: EmailAccount) {
         val syncState = emailStore.getSyncState(account.id)
-        val attemptAt = Clock.System.now().toEpochMilliseconds()
+        val attemptAt = kotlinx.datetime.Clock.System.now().toEpochMilliseconds()
         try {
             val password = emailStore.getPassword(account.id)
             val imap = imapClientFactory(account.imapHost, account.imapPort)

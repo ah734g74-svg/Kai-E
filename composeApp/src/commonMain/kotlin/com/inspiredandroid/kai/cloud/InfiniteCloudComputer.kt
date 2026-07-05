@@ -6,7 +6,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.encodeToString
-import kotlinx.datetime.Clock
 
 /**
  * InfiniteCloudComputer — نظام الكمبيوتر السحابي اللانهائي.
@@ -117,7 +116,7 @@ class InfiniteCloudComputer(private val appSettings: AppSettings) {
         val session = InfiniteCloudSession(
             sessionId = sessionId,
             status = "active",
-            createdAt = Clock.System.now().toEpochMilliseconds(),
+            createdAt = kotlinx.datetime.Clock.System.now().toEpochMilliseconds(),
             isInfinite = true
         )
         val sessions = _activeSessions.value.toMutableList()
@@ -134,7 +133,7 @@ class InfiniteCloudComputer(private val appSettings: AppSettings) {
                     cpuUsage = cpuUsage,
                     memoryUsage = memoryUsage,
                     storageUsed = storageUsed,
-                    uptime = Clock.System.now().toEpochMilliseconds() - session.createdAt
+                    uptime = kotlinx.datetime.Clock.System.now().toEpochMilliseconds() - session.createdAt
                 )
             } else {
                 session

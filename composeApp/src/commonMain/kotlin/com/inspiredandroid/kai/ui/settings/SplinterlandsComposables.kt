@@ -437,7 +437,7 @@ private fun SplinterlandsBattleLogRow(entry: BattleLogEntry) {
                 )
                 if (entry.timestampMs > 0) {
                     val relTime = remember(entry.timestampMs) {
-                        val nowMs = kotlin.time.Clock.System.now().toEpochMilliseconds()
+                        val nowMs = kotlin.time.kotlinx.datetime.Clock.System.now().toEpochMilliseconds()
                         formatRelativeTime(entry.timestampMs, nowMs)
                     }
                     Text(
@@ -941,7 +941,7 @@ private fun SplinterlandsCountdown(deadlineMs: Long) {
     LaunchedEffect(deadlineMs) {
         if (deadlineMs > 0L) {
             while (true) {
-                remaining = ((deadlineMs - kotlin.time.Clock.System.now().toEpochMilliseconds()) / 1000).coerceAtLeast(0L)
+                remaining = ((deadlineMs - kotlin.time.kotlinx.datetime.Clock.System.now().toEpochMilliseconds()) / 1000).coerceAtLeast(0L)
                 kotlinx.coroutines.delay(1.seconds)
             }
         }

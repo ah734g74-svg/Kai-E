@@ -74,7 +74,7 @@ object SchedulingTools {
                 } catch (e: Exception) {
                     return mapOf("success" to false, "error" to "Invalid execute_at format: ${e.message}")
                 }
-                val nowMs = Clock.System.now().toEpochMilliseconds()
+                val nowMs = kotlinx.datetime.Clock.System.now().toEpochMilliseconds()
                 if (parsed < nowMs - PAST_INSTANT_SLACK_MS) {
                     return mapOf(
                         "success" to false,

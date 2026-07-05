@@ -55,7 +55,7 @@ class MemoryStore(private val appSettings: AppSettings) {
         source: String? = null,
     ): MemoryEntry = mutex.withLock {
         val memories = loadMemories()
-        val now = Clock.System.now().toEpochMilliseconds()
+        val now = kotlinx.datetime.Clock.System.now().toEpochMilliseconds()
         val existing = memories.indexOfFirst { it.key == key }
         val entry = if (existing >= 0) {
             val updated = memories[existing].copy(content = content, updatedAt = now, category = category, source = source ?: memories[existing].source)
@@ -74,7 +74,7 @@ class MemoryStore(private val appSettings: AppSettings) {
         val memories = loadMemories()
         val index = memories.indexOfFirst { it.key == key }
         if (index < 0) return@withLock null
-        val now = Clock.System.now().toEpochMilliseconds()
+        val now = kotlinx.datetime.Clock.System.now().toEpochMilliseconds()
         val updated = memories[index].copy(content = content, updatedAt = now)
         memories[index] = updated
         saveMemories(memories)
@@ -85,7 +85,7 @@ class MemoryStore(private val appSettings: AppSettings) {
         val memories = loadMemories()
         val index = memories.indexOfFirst { it.key == key }
         if (index < 0) return@withLock null
-        val now = Clock.System.now().toEpochMilliseconds()
+        val now = kotlinx.datetime.Clock.System.now().toEpochMilliseconds()
         val updated = memories[index].copy(hitCount = memories[index].hitCount + 1, updatedAt = now)
         memories[index] = updated
         saveMemories(memories)

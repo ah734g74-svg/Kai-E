@@ -6,7 +6,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.encodeToString
-import kotlinx.datetime.Clock
 
 /**
  * DeepCodeAuditor — محرك التدقيق العميق للأكواد.
@@ -94,7 +93,7 @@ class DeepCodeAuditor(private val appSettings: AppSettings) {
     }
 
     suspend fun auditCode(codeId: String, code: String): CodeAuditReport {
-        val startTime = Clock.System.now().toEpochMilliseconds()
+        val startTime = kotlinx.datetime.Clock.System.now().toEpochMilliseconds()
         
         // تحليل شامل للكود
         val syntaxIssues = checkSyntax(code)
@@ -119,7 +118,7 @@ class DeepCodeAuditor(private val appSettings: AppSettings) {
             styleIssues = styleIssues.size,
             overallScore = overallScore,
             isApproved = isApproved,
-            auditTime = Clock.System.now().toEpochMilliseconds() - startTime,
+            auditTime = kotlinx.datetime.Clock.System.now().toEpochMilliseconds() - startTime,
             recommendations = recommendations
         )
         

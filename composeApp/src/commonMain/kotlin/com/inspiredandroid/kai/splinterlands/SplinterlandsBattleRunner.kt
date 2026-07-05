@@ -201,7 +201,7 @@ class SplinterlandsBattleRunner(
         battleActivities[accountId] = mutableListOf()
         updateStatus(accountId) {
             it.copy(
-                battleStartedAtMs = Clock.System.now().toEpochMilliseconds(),
+                battleStartedAtMs = kotlinx.datetime.Clock.System.now().toEpochMilliseconds(),
                 currentOpponent = "",
                 currentMana = 0,
                 currentRulesets = "",
@@ -275,12 +275,12 @@ class SplinterlandsBattleRunner(
             try {
                 kotlin.time.Instant.parse(expirationStr).toEpochMilliseconds() - 10_000
             } catch (_: Exception) {
-                Clock.System.now().toEpochMilliseconds() + TEAM_DEADLINE_MS
+                kotlinx.datetime.Clock.System.now().toEpochMilliseconds() + TEAM_DEADLINE_MS
             }
         } else {
-            Clock.System.now().toEpochMilliseconds() + TEAM_DEADLINE_MS
+            kotlinx.datetime.Clock.System.now().toEpochMilliseconds() + TEAM_DEADLINE_MS
         }
-        val deadlineSec = (teamDeadlineMs - Clock.System.now().toEpochMilliseconds()) / 1000
+        val deadlineSec = (teamDeadlineMs - kotlinx.datetime.Clock.System.now().toEpochMilliseconds()) / 1000
         activity(accountId, "Matched vs $opponent ($matchMana mana, $matchRulesets)")
         activity(accountId, "Team deadline: ${deadlineSec}s${if (expirationStr != null) " (from server)" else " (fallback)"}")
         updateStatus(accountId) {
@@ -343,7 +343,7 @@ class SplinterlandsBattleRunner(
         cards: JsonArray,
         matchInfo: JsonObject,
         cardDetails: JsonArray,
-        teamDeadlineMs: Long = Clock.System.now().toEpochMilliseconds() + TEAM_DEADLINE_MS,
+        teamDeadlineMs: Long = kotlinx.datetime.Clock.System.now().toEpochMilliseconds() + TEAM_DEADLINE_MS,
     ): TeamSelection? {
         // Build summoner/monster lists for LLM
         val manaCap = matchInfo["mana_cap"]?.jsonPrimitive?.intOrNull ?: 20
@@ -451,7 +451,7 @@ class SplinterlandsBattleRunner(
             queryScope.launch {
                 val modelName = store.getModelName(instanceId)
                 val result = try {
-                    val llmTimeout = teamDeadlineMs - Clock.System.now().toEpochMilliseconds() - 5_000
+                    val llmTimeout = teamDeadlineMs - kotlinx.datetime.Clock.System.now().toEpochMilliseconds() - 5_000
                     if (llmTimeout < 10_000) {
                         ServiceResult(index, instanceId, null, modelName, null, listOf("deadline"))
                     } else {
@@ -477,7 +477,7 @@ class SplinterlandsBattleRunner(
         var receivedCount = 0
         while (receivedCount < instanceIds.size) {
             // Stop waiting 10s before deadline if we already have a valid result
-            val timeUntilDeadline = teamDeadlineMs - Clock.System.now().toEpochMilliseconds()
+            val timeUntilDeadline = teamDeadlineMs - kotlinx.datetime.Clock.System.now().toEpochMilliseconds()
             val receiveTimeout = (timeUntilDeadline - 10_000).coerceAtLeast(100)
 
             val result = withTimeoutOrNull(receiveTimeout) {
@@ -552,7 +552,7 @@ class SplinterlandsBattleRunner(
                 won = won,
                 mana = mana,
                 rulesets = rulesets,
-                timestampMs = Clock.System.now().toEpochMilliseconds(),
+                timestampMs = kotlinx.datetime.Clock.System.now().toEpochMilliseconds(),
                 account = account,
                 llmPicked = llmPicked,
                 modelName = if (llmPicked == true) status.winningServiceName.ifBlank { store.getModelName() } else "",

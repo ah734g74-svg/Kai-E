@@ -6,7 +6,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.encodeToString
-import kotlinx.datetime.Clock
 
 /**
  * AbsoluteFileManager — نظام الوصول المطلق للملفات
@@ -94,10 +93,10 @@ class AbsoluteFileManager(private val appSettings: AppSettings) {
     // طلب الوصول للملف (Read)
     fun requestFileRead(filePath: String): FileOperation {
         val operation = FileOperation(
-            id = "op-${Clock.System.now().toEpochMilliseconds()}",
+            id = "op-${kotlinx.datetime.Clock.System.now().toEpochMilliseconds()}",
             type = "read",
             filePath = filePath,
-            timestamp = Clock.System.now().toEpochMilliseconds(),
+            timestamp = kotlinx.datetime.Clock.System.now().toEpochMilliseconds(),
             status = "pending",
             isApproved = false
         )
@@ -108,11 +107,11 @@ class AbsoluteFileManager(private val appSettings: AppSettings) {
     // طلب تعديل الملف (Write)
     fun requestFileWrite(filePath: String, targetPath: String = ""): FileOperation {
         val operation = FileOperation(
-            id = "op-${Clock.System.now().toEpochMilliseconds()}",
+            id = "op-${kotlinx.datetime.Clock.System.now().toEpochMilliseconds()}",
             type = "write",
             filePath = filePath,
             targetPath = targetPath,
-            timestamp = Clock.System.now().toEpochMilliseconds(),
+            timestamp = kotlinx.datetime.Clock.System.now().toEpochMilliseconds(),
             status = "pending",
             isApproved = false
         )
@@ -123,10 +122,10 @@ class AbsoluteFileManager(private val appSettings: AppSettings) {
     // طلب حذف الملف (Delete)
     fun requestFileDelete(filePath: String): FileOperation {
         val operation = FileOperation(
-            id = "op-${Clock.System.now().toEpochMilliseconds()}",
+            id = "op-${kotlinx.datetime.Clock.System.now().toEpochMilliseconds()}",
             type = "delete",
             filePath = filePath,
-            timestamp = Clock.System.now().toEpochMilliseconds(),
+            timestamp = kotlinx.datetime.Clock.System.now().toEpochMilliseconds(),
             status = "pending",
             isApproved = false
         )
@@ -137,10 +136,10 @@ class AbsoluteFileManager(private val appSettings: AppSettings) {
     // طلب إنشاء ملف (Create)
     fun requestFileCreate(filePath: String): FileOperation {
         val operation = FileOperation(
-            id = "op-${Clock.System.now().toEpochMilliseconds()}",
+            id = "op-${kotlinx.datetime.Clock.System.now().toEpochMilliseconds()}",
             type = "create",
             filePath = filePath,
-            timestamp = Clock.System.now().toEpochMilliseconds(),
+            timestamp = kotlinx.datetime.Clock.System.now().toEpochMilliseconds(),
             status = "pending",
             isApproved = false
         )
@@ -151,10 +150,10 @@ class AbsoluteFileManager(private val appSettings: AppSettings) {
     // طلب تعديل الملف (Modify)
     fun requestFileModify(filePath: String): FileOperation {
         val operation = FileOperation(
-            id = "op-${Clock.System.now().toEpochMilliseconds()}",
+            id = "op-${kotlinx.datetime.Clock.System.now().toEpochMilliseconds()}",
             type = "modify",
             filePath = filePath,
-            timestamp = Clock.System.now().toEpochMilliseconds(),
+            timestamp = kotlinx.datetime.Clock.System.now().toEpochMilliseconds(),
             status = "pending",
             isApproved = false
         )
@@ -165,11 +164,11 @@ class AbsoluteFileManager(private val appSettings: AppSettings) {
     // طلب دمج ملفات (Merge)
     fun requestFileMerge(sourceFiles: List<String>, targetPath: String): FileOperation {
         val operation = FileOperation(
-            id = "op-${Clock.System.now().toEpochMilliseconds()}",
+            id = "op-${kotlinx.datetime.Clock.System.now().toEpochMilliseconds()}",
             type = "merge",
             filePath = sourceFiles.joinToString(","),
             targetPath = targetPath,
-            timestamp = Clock.System.now().toEpochMilliseconds(),
+            timestamp = kotlinx.datetime.Clock.System.now().toEpochMilliseconds(),
             status = "pending",
             isApproved = false
         )
@@ -180,11 +179,11 @@ class AbsoluteFileManager(private val appSettings: AppSettings) {
     // طلب تفكيك ملف (Split)
     fun requestFileSplit(filePath: String, parts: Int): FileOperation {
         val operation = FileOperation(
-            id = "op-${Clock.System.now().toEpochMilliseconds()}",
+            id = "op-${kotlinx.datetime.Clock.System.now().toEpochMilliseconds()}",
             type = "split",
             filePath = filePath,
             targetPath = parts.toString(),
-            timestamp = Clock.System.now().toEpochMilliseconds(),
+            timestamp = kotlinx.datetime.Clock.System.now().toEpochMilliseconds(),
             status = "pending",
             isApproved = false
         )
@@ -195,11 +194,11 @@ class AbsoluteFileManager(private val appSettings: AppSettings) {
     // طلب البحث عن ملفات (Search)
     fun requestFileSearch(pattern: String, directory: String = "/"): FileOperation {
         val operation = FileOperation(
-            id = "op-${Clock.System.now().toEpochMilliseconds()}",
+            id = "op-${kotlinx.datetime.Clock.System.now().toEpochMilliseconds()}",
             type = "search",
             filePath = directory,
             targetPath = pattern,
-            timestamp = Clock.System.now().toEpochMilliseconds(),
+            timestamp = kotlinx.datetime.Clock.System.now().toEpochMilliseconds(),
             status = "pending",
             isApproved = false
         )
@@ -210,10 +209,10 @@ class AbsoluteFileManager(private val appSettings: AppSettings) {
     // طلب تحليل الملف (Analyze)
     fun requestFileAnalyze(filePath: String): FileOperation {
         val operation = FileOperation(
-            id = "op-${Clock.System.now().toEpochMilliseconds()}",
+            id = "op-${kotlinx.datetime.Clock.System.now().toEpochMilliseconds()}",
             type = "analyze",
             filePath = filePath,
-            timestamp = Clock.System.now().toEpochMilliseconds(),
+            timestamp = kotlinx.datetime.Clock.System.now().toEpochMilliseconds(),
             status = "pending",
             isApproved = false
         )
@@ -227,7 +226,7 @@ class AbsoluteFileManager(private val appSettings: AppSettings) {
             if (op.id == operationId) {
                 op.copy(
                     isApproved = true,
-                    approvalTime = Clock.System.now().toEpochMilliseconds(),
+                    approvalTime = kotlinx.datetime.Clock.System.now().toEpochMilliseconds(),
                     status = "approved"
                 )
             } else {
@@ -257,7 +256,7 @@ class AbsoluteFileManager(private val appSettings: AppSettings) {
     fun logExecutedOperation(operation: FileOperation) {
         val executed = operation.copy(
             status = "completed",
-            executionTime = Clock.System.now().toEpochMilliseconds() - operation.timestamp
+            executionTime = kotlinx.datetime.Clock.System.now().toEpochMilliseconds() - operation.timestamp
         )
         val operations = _fileOperations.value.toMutableList()
         operations.add(executed)
@@ -283,10 +282,10 @@ class AbsoluteFileManager(private val appSettings: AppSettings) {
     // إصلاح الملفات التالفة
     fun repairCorruptedFile(filePath: String): FileOperation {
         val operation = FileOperation(
-            id = "op-${Clock.System.now().toEpochMilliseconds()}",
+            id = "op-${kotlinx.datetime.Clock.System.now().toEpochMilliseconds()}",
             type = "repair",
             filePath = filePath,
-            timestamp = Clock.System.now().toEpochMilliseconds(),
+            timestamp = kotlinx.datetime.Clock.System.now().toEpochMilliseconds(),
             status = "pending",
             isApproved = false
         )
@@ -297,11 +296,11 @@ class AbsoluteFileManager(private val appSettings: AppSettings) {
     // نسخ الملف
     fun requestFileCopy(sourcePath: String, destinationPath: String): FileOperation {
         val operation = FileOperation(
-            id = "op-${Clock.System.now().toEpochMilliseconds()}",
+            id = "op-${kotlinx.datetime.Clock.System.now().toEpochMilliseconds()}",
             type = "copy",
             filePath = sourcePath,
             targetPath = destinationPath,
-            timestamp = Clock.System.now().toEpochMilliseconds(),
+            timestamp = kotlinx.datetime.Clock.System.now().toEpochMilliseconds(),
             status = "pending",
             isApproved = false
         )
@@ -312,11 +311,11 @@ class AbsoluteFileManager(private val appSettings: AppSettings) {
     // نقل الملف
     fun requestFileMove(sourcePath: String, destinationPath: String): FileOperation {
         val operation = FileOperation(
-            id = "op-${Clock.System.now().toEpochMilliseconds()}",
+            id = "op-${kotlinx.datetime.Clock.System.now().toEpochMilliseconds()}",
             type = "move",
             filePath = sourcePath,
             targetPath = destinationPath,
-            timestamp = Clock.System.now().toEpochMilliseconds(),
+            timestamp = kotlinx.datetime.Clock.System.now().toEpochMilliseconds(),
             status = "pending",
             isApproved = false
         )

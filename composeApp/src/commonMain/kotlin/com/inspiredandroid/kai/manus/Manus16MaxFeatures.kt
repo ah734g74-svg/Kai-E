@@ -6,7 +6,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.encodeToString
-import kotlinx.datetime.Clock
 
 /**
  * Manus16MaxFeatures — نظام ميزات Manus 1.6 Max الكاملة.
@@ -22,7 +21,7 @@ data class Manus16MaxFeature(
     val isFree: Boolean = true,
     val isInfinite: Boolean = true,
     val version: String = "1.6.0-max",
-    val lastUpdated: Long = Clock.System.now().toEpochMilliseconds()
+    val lastUpdated: Long = kotlinx.datetime.Clock.System.now().toEpochMilliseconds()
 )
 
 @Serializable

@@ -3,7 +3,6 @@ package com.inspiredandroid.kai.video
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.serialization.Serializable
-import kotlinx.datetime.Clock
 
 /**
  * ForceCompressionEngine — محرك الضغط الإجباري
@@ -21,7 +20,7 @@ data class CompressionTask(
     val codec: String = "h264",
     val status: String = "pending", // pending, compressing, completed, failed
     val progress: Float = 0f,
-    val startTime: Long = Clock.System.now().toEpochMilliseconds(),
+    val startTime: Long = kotlinx.datetime.Clock.System.now().toEpochMilliseconds(),
     val completedTime: Long = 0,
     val inputSize: Long = 0,
     val outputSize: Long = 0,
@@ -94,7 +93,7 @@ class ForceCompressionEngine {
         val profile = compressionProfiles[targetResolution] ?: compressionProfiles["140p"]!!
         
         val task = CompressionTask(
-            id = "compress-${Clock.System.now().toEpochMilliseconds()}",
+            id = "compress-${kotlinx.datetime.Clock.System.now().toEpochMilliseconds()}",
             inputFile = inputFile,
             outputFile = outputFile,
             targetResolution = targetResolution,
@@ -162,7 +161,7 @@ class ForceCompressionEngine {
             tasks[index] = task.copy(
                 status = "completed",
                 progress = 100f,
-                completedTime = Clock.System.now().toEpochMilliseconds()
+                completedTime = kotlinx.datetime.Clock.System.now().toEpochMilliseconds()
             )
             
             _compressionTasks.value = tasks
@@ -179,7 +178,7 @@ class ForceCompressionEngine {
             tasks[index] = task.copy(
                 status = "failed",
                 errorMessage = errorMessage,
-                completedTime = Clock.System.now().toEpochMilliseconds()
+                completedTime = kotlinx.datetime.Clock.System.now().toEpochMilliseconds()
             )
             
             _compressionTasks.value = tasks
@@ -226,7 +225,7 @@ class ForceCompressionEngine {
     fun getCompressionSpeed(taskId: String): String {
         val task = _compressionTasks.value.firstOrNull { it.id == taskId }
         return if (task != null && task.startTime > 0) {
-            val elapsed = Clock.System.now().toEpochMilliseconds() - task.startTime
+            val elapsed = kotlinx.datetime.Clock.System.now().toEpochMilliseconds() - task.startTime
             if (elapsed > 0) {
                 val speed = (task.outputSize.toFloat() / elapsed) * 1000 // bytes per second
                 "OMEGA_SPEED_∞" // سرعة لانهائية

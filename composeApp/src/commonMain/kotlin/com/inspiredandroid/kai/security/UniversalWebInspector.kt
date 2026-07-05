@@ -3,7 +3,6 @@ package com.inspiredandroid.kai.security
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.serialization.Serializable
-import kotlinx.datetime.Clock
 
 /**
  * UniversalWebInspector — محلل الويب الشامل
@@ -28,7 +27,7 @@ data class WebAnalysis(
     val images: List<ImageData> = emptyList(),
     val links: List<LinkData> = emptyList(),
     val analysisTime: Long = 0,
-    val startTime: Long = Clock.System.now().toEpochMilliseconds(),
+    val startTime: Long = kotlinx.datetime.Clock.System.now().toEpochMilliseconds(),
     val completedTime: Long = 0,
     val securityScore: Float = 0f,
     val vulnerabilities: List<String> = emptyList()
@@ -80,10 +79,10 @@ class UniversalWebInspector {
     // تحليل موقع ويب شامل
     fun analyzeWebsite(targetUrl: String): WebAnalysis {
         val analysis = WebAnalysis(
-            id = "analysis-${Clock.System.now().toEpochMilliseconds()}",
+            id = "analysis-${kotlinx.datetime.Clock.System.now().toEpochMilliseconds()}",
             targetUrl = targetUrl,
             status = "analyzing",
-            startTime = Clock.System.now().toEpochMilliseconds()
+            startTime = kotlinx.datetime.Clock.System.now().toEpochMilliseconds()
         )
         
         addAnalysis(analysis)
@@ -262,8 +261,8 @@ class UniversalWebInspector {
             val analysis = analyses[index]
             analyses[index] = analysis.copy(
                 status = "completed",
-                analysisTime = Clock.System.now().toEpochMilliseconds() - analysis.startTime,
-                completedTime = Clock.System.now().toEpochMilliseconds(),
+                analysisTime = kotlinx.datetime.Clock.System.now().toEpochMilliseconds() - analysis.startTime,
+                completedTime = kotlinx.datetime.Clock.System.now().toEpochMilliseconds(),
                 securityScore = securityScore,
                 vulnerabilities = vulnerabilities
             )
@@ -280,7 +279,7 @@ class UniversalWebInspector {
             val analysis = analyses[index]
             analyses[index] = analysis.copy(
                 status = "failed",
-                completedTime = Clock.System.now().toEpochMilliseconds()
+                completedTime = kotlinx.datetime.Clock.System.now().toEpochMilliseconds()
             )
             _analyses.value = analyses
         }

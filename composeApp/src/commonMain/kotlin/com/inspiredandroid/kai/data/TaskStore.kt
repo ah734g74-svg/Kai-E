@@ -125,7 +125,7 @@ class TaskStore(private val appSettings: AppSettings) {
     }
 
     fun getDueTasks(): List<ScheduledTask> {
-        val now = Clock.System.now().toEpochMilliseconds()
+        val now = kotlinx.datetime.Clock.System.now().toEpochMilliseconds()
         return loadTasks().filter {
             it.trigger != TaskTrigger.HEARTBEAT &&
                 it.scheduledAtEpochMs <= now &&

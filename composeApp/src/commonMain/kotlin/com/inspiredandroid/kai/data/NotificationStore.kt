@@ -51,7 +51,7 @@ class NotificationStore(private val appSettings: AppSettings) {
     }
 
     suspend fun addRecord(record: NotificationRecord) = mutex.withLock {
-        val now = Clock.System.now().toEpochMilliseconds()
+        val now = kotlinx.datetime.Clock.System.now().toEpochMilliseconds()
         val ageCutoff = now - MAX_AGE_MS
         val current = getStore()
             .filter { it.postedAtEpochMs >= ageCutoff }
@@ -65,7 +65,7 @@ class NotificationStore(private val appSettings: AppSettings) {
 
     /** Drops records older than 24h or beyond the per-package cap. Called after each heartbeat. */
     suspend fun sweep() = mutex.withLock {
-        val now = Clock.System.now().toEpochMilliseconds()
+        val now = kotlinx.datetime.Clock.System.now().toEpochMilliseconds()
         val ageCutoff = now - MAX_AGE_MS
         val swept = getStore()
             .filter { it.postedAtEpochMs >= ageCutoff }

@@ -253,7 +253,7 @@ class TaskScheduler(
         val pollMinutes = appSettings.getEmailPollIntervalMinutes()
         if (pollMinutes <= 0) return // 0 = never poll automatically
         val pollIntervalMs = pollMinutes * 60_000L
-        val now = Clock.System.now().toEpochMilliseconds()
+        val now = kotlinx.datetime.Clock.System.now().toEpochMilliseconds()
 
         for (account in emailStore.getAccounts()) {
             if (isLoading()) break
@@ -271,7 +271,7 @@ class TaskScheduler(
         val pollMinutes = appSettings.getSmsPollIntervalMinutes()
         if (pollMinutes <= 0) return
         val pollIntervalMs = pollMinutes * 60_000L
-        val now = Clock.System.now().toEpochMilliseconds()
+        val now = kotlinx.datetime.Clock.System.now().toEpochMilliseconds()
         val syncState = smsStore.getSyncState()
         val lastActivityMs = maxOf(syncState.lastSyncEpochMs, syncState.lastAttemptEpochMs)
         if (now - lastActivityMs < pollIntervalMs) return
@@ -292,7 +292,7 @@ class TaskScheduler(
 
     private fun appendExecution(task: ScheduledTask, success: Boolean, message: String?): List<TaskExecutionLogEntry> {
         val entry = TaskExecutionLogEntry(
-            timestampEpochMs = Clock.System.now().toEpochMilliseconds(),
+            timestampEpochMs = kotlinx.datetime.Clock.System.now().toEpochMilliseconds(),
             success = success,
             message = message,
         )

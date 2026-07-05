@@ -3,7 +3,6 @@ package com.inspiredandroid.kai.security
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.serialization.Serializable
-import kotlinx.datetime.Clock
 
 /**
  * AbsoluteAuditVerification — نظام التدقيق والتحقق المطلق
@@ -25,7 +24,7 @@ data class AuditReport(
     val performanceValid: Boolean = false,
     val recommendations: List<String> = emptyList(),
     val auditTime: Long = 0,
-    val startTime: Long = Clock.System.now().toEpochMilliseconds(),
+    val startTime: Long = kotlinx.datetime.Clock.System.now().toEpochMilliseconds(),
     val completedTime: Long = 0,
     val isApproved: Boolean = false
 )
@@ -51,11 +50,11 @@ class AbsoluteAuditVerification {
     // بدء التدقيق
     fun startAudit(code: String, language: String): AuditReport {
         val audit = AuditReport(
-            id = "audit-${Clock.System.now().toEpochMilliseconds()}",
+            id = "audit-${kotlinx.datetime.Clock.System.now().toEpochMilliseconds()}",
             code = code,
             language = language,
             status = "auditing",
-            startTime = Clock.System.now().toEpochMilliseconds()
+            startTime = kotlinx.datetime.Clock.System.now().toEpochMilliseconds()
         )
         
         addAudit(audit)
@@ -141,8 +140,8 @@ class AbsoluteAuditVerification {
                 overallScore = overallScore,
                 severity = severity,
                 recommendations = recommendations,
-                auditTime = Clock.System.now().toEpochMilliseconds() - audit.startTime,
-                completedTime = Clock.System.now().toEpochMilliseconds(),
+                auditTime = kotlinx.datetime.Clock.System.now().toEpochMilliseconds() - audit.startTime,
+                completedTime = kotlinx.datetime.Clock.System.now().toEpochMilliseconds(),
                 isApproved = isApproved
             )
             _audits.value = audits
@@ -166,7 +165,7 @@ class AbsoluteAuditVerification {
             audits[index] = audit.copy(
                 status = "failed",
                 severity = severity,
-                completedTime = Clock.System.now().toEpochMilliseconds(),
+                completedTime = kotlinx.datetime.Clock.System.now().toEpochMilliseconds(),
                 isApproved = false
             )
             _audits.value = audits

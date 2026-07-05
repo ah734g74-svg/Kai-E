@@ -6,7 +6,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.encodeToString
-import kotlinx.datetime.Clock
 
 /**
  * Cloud Computer Manager — نظام الكمبيوتر السحابي الكامل لـ Manus 1.6 Max.
@@ -79,8 +78,8 @@ class CloudComputerManager(private val appSettings: AppSettings) {
         val session = CloudSession(
             sessionId = sessionId,
             status = "active",
-            createdAt = Clock.System.now().toEpochMilliseconds(),
-            lastActivity = Clock.System.now().toEpochMilliseconds(),
+            createdAt = kotlinx.datetime.Clock.System.now().toEpochMilliseconds(),
+            lastActivity = kotlinx.datetime.Clock.System.now().toEpochMilliseconds(),
             resourceUsage = ResourceUsage()
         )
         val currentSessions = _sessions.value.toMutableList()
@@ -93,7 +92,7 @@ class CloudComputerManager(private val appSettings: AppSettings) {
     fun updateSessionActivity(sessionId: String) {
         val updated = _sessions.value.map { session ->
             if (session.sessionId == sessionId) {
-                session.copy(lastActivity = Clock.System.now().toEpochMilliseconds())
+                session.copy(lastActivity = kotlinx.datetime.Clock.System.now().toEpochMilliseconds())
             } else {
                 session
             }

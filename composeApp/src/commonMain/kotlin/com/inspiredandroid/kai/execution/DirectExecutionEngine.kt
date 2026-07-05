@@ -3,7 +3,6 @@ package com.inspiredandroid.kai.execution
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.serialization.Serializable
-import kotlinx.datetime.Clock
 
 /**
  * DirectExecutionEngine — محرك التنفيذ المباشر
@@ -21,7 +20,7 @@ data class ExecutionCommand(
     val errorOutput: String = "",
     val exitCode: Int = 0,
     val executionTime: Long = 0,
-    val startTime: Long = Clock.System.now().toEpochMilliseconds(),
+    val startTime: Long = kotlinx.datetime.Clock.System.now().toEpochMilliseconds(),
     val completedTime: Long = 0,
     val isAsync: Boolean = false,
     val timeout: Long = 0, // 0 = no timeout
@@ -37,7 +36,7 @@ data class CodeExecution(
     val output: String = "",
     val errorMessage: String = "",
     val executionTime: Long = 0,
-    val startTime: Long = Clock.System.now().toEpochMilliseconds(),
+    val startTime: Long = kotlinx.datetime.Clock.System.now().toEpochMilliseconds(),
     val completedTime: Long = 0,
     val variables: Map<String, String> = emptyMap(),
     val isVerified: Boolean = false
@@ -63,12 +62,12 @@ class DirectExecutionEngine {
         priority: Int = 5
     ): ExecutionCommand {
         val cmd = ExecutionCommand(
-            id = "cmd-${Clock.System.now().toEpochMilliseconds()}",
+            id = "cmd-${kotlinx.datetime.Clock.System.now().toEpochMilliseconds()}",
             command = command,
             language = language,
             arguments = arguments,
             status = "executing",
-            startTime = Clock.System.now().toEpochMilliseconds(),
+            startTime = kotlinx.datetime.Clock.System.now().toEpochMilliseconds(),
             isAsync = isAsync,
             timeout = timeout,
             priority = priority
@@ -85,11 +84,11 @@ class DirectExecutionEngine {
         variables: Map<String, String> = emptyMap()
     ): CodeExecution {
         val execution = CodeExecution(
-            id = "code-${Clock.System.now().toEpochMilliseconds()}",
+            id = "code-${kotlinx.datetime.Clock.System.now().toEpochMilliseconds()}",
             code = code,
             language = language,
             status = "executing",
-            startTime = Clock.System.now().toEpochMilliseconds(),
+            startTime = kotlinx.datetime.Clock.System.now().toEpochMilliseconds(),
             variables = variables
         )
         
@@ -140,8 +139,8 @@ class DirectExecutionEngine {
                 output = output,
                 errorOutput = errorOutput,
                 exitCode = exitCode,
-                completedTime = if (status == "completed" || status == "failed") Clock.System.now().toEpochMilliseconds() else 0,
-                executionTime = Clock.System.now().toEpochMilliseconds() - cmd.startTime
+                completedTime = if (status == "completed" || status == "failed") kotlinx.datetime.Clock.System.now().toEpochMilliseconds() else 0,
+                executionTime = kotlinx.datetime.Clock.System.now().toEpochMilliseconds() - cmd.startTime
             )
             _commands.value = commands
         }
@@ -165,8 +164,8 @@ class DirectExecutionEngine {
                 output = output,
                 errorMessage = errorMessage,
                 variables = variables,
-                completedTime = if (status == "completed" || status == "failed") Clock.System.now().toEpochMilliseconds() else 0,
-                executionTime = Clock.System.now().toEpochMilliseconds() - exec.startTime,
+                completedTime = if (status == "completed" || status == "failed") kotlinx.datetime.Clock.System.now().toEpochMilliseconds() else 0,
+                executionTime = kotlinx.datetime.Clock.System.now().toEpochMilliseconds() - exec.startTime,
                 isVerified = status == "completed"
             )
             _codeExecutions.value = executions

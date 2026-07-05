@@ -368,7 +368,7 @@ private fun sanitizeScheduledTasks(element: JsonElement): String {
     } catch (_: Exception) {
         return "[]"
     }
-    val now = Clock.System.now().toEpochMilliseconds()
+    val now = kotlinx.datetime.Clock.System.now().toEpochMilliseconds()
     val tasks = array.mapNotNull { item ->
         try {
             SharedJson.decodeFromString<ScheduledTask>(item.toString())
@@ -398,7 +398,7 @@ private fun sanitizeMemories(element: JsonElement): String {
     } catch (_: Exception) {
         return "[]"
     }
-    val now = Clock.System.now().toEpochMilliseconds()
+    val now = kotlinx.datetime.Clock.System.now().toEpochMilliseconds()
     val memories = array.mapNotNull { item ->
         try {
             SharedJson.decodeFromString<MemoryEntry>(item.toString())

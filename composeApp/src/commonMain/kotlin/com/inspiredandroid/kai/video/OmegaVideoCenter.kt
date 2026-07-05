@@ -6,7 +6,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.encodeToString
-import kotlinx.datetime.Clock
 
 /**
  * OmegaVideoCenter — مركز فيديو أوميغا الخارق
@@ -27,7 +26,7 @@ data class VideoDownload(
     val progress: Float = 0f,
     val downloadSpeed: Long = 0, // bytes per second
     val estimatedTime: Long = 0, // milliseconds
-    val startTime: Long = Clock.System.now().toEpochMilliseconds(),
+    val startTime: Long = kotlinx.datetime.Clock.System.now().toEpochMilliseconds(),
     val completedTime: Long = 0,
     val isResumable: Boolean = true,
     val compressionLevel: Int = 9, // 1-9, 9 = maximum compression
@@ -134,13 +133,13 @@ class OmegaVideoCenter(private val appSettings: AppSettings) {
         bypassBlockade: Boolean = true
     ): VideoDownload {
         val download = VideoDownload(
-            id = "vid-${Clock.System.now().toEpochMilliseconds()}",
+            id = "vid-${kotlinx.datetime.Clock.System.now().toEpochMilliseconds()}",
             videoUrl = videoUrl,
             title = title,
             targetQuality = targetQuality,
             filePath = filePath,
             status = "downloading",
-            startTime = Clock.System.now().toEpochMilliseconds(),
+            startTime = kotlinx.datetime.Clock.System.now().toEpochMilliseconds(),
             bypassBlockade = bypassBlockade,
             downloadSpeed = Long.MAX_VALUE, // سرعة لانهائية
             autoCompress = true,
@@ -232,7 +231,7 @@ class OmegaVideoCenter(private val appSettings: AppSettings) {
     fun saveCompletedVideo(downloadId: String) {
         val download = _downloads.value.firstOrNull { it.id == downloadId }
         if (download != null && download.status == "completed") {
-            val completed = download.copy(completedTime = Clock.System.now().toEpochMilliseconds())
+            val completed = download.copy(completedTime = kotlinx.datetime.Clock.System.now().toEpochMilliseconds())
             val completedList = _completedVideos.value.toMutableList()
             completedList.add(completed)
             _completedVideos.value = completedList
