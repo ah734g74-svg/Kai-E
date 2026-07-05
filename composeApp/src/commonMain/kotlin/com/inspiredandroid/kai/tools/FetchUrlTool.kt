@@ -138,6 +138,21 @@ object FetchUrlTool : Tool {
         return false
     }
 
+    private fun String.decodeHtmlEntities(): String = this
+        .replace("&amp;", "&")
+        .replace("&lt;", "<")
+        .replace("&gt;", ">")
+        .replace("&quot;", "\"")
+        .replace("&#x27;", "'")
+        .replace("&#39;", "'")
+        .replace("&nbsp;", " ")
+        .replace("&ndash;", "–")
+        .replace("&mdash;", "—")
+        .replace("&lsquo;", "‘")
+        .replace("&rsquo;", "’")
+        .replace("&ldquo;", "“")
+        .replace("&rdquo;", "”")
+
     val toolInfo = ToolInfo(
         id = "fetch_url",
         name = "Fetch URL",

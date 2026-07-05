@@ -284,161 +284,62 @@ class LinuxSandboxManager(
     fun installPackages() {
         if (currentJob?.isActive == true) return
         val packages = listOf(
-            "bash", "curl", "wget", "git", "jq", "python3", "py3-pip", "nodejs",
-            "openssh-client", "lftp", "rsync",
-            // ULTIMATE HACKING ARSENAL
-            "nmap", "sqlmap", "nikto", "metasploit-framework", "hydra", "john",
-            "aircrack-ng", "tcpdump", "wireshark", "proxychains-ng", "tor",
-            "python3-dev", "build-base", "libffi-dev", "openssl-dev",
-            "exploitdb", "hashcat", "gobuster", "dirb", "wfuzz", "commix",
-            "ettercap", "bettercap", "responder", "mimikatz", "impacket",
-            "radare2", "gdb", "strace", "ltrace", "binwalk", "foremost",
-            "netcat-openbsd", "socat", "hping3", "masscan", "dnsrecon",
-            "subfinder", "httpx", "naabu", "nuclei", "recon-ng", "sherlock",
-            "whois", "dig", "nslookup", "snmpcheck", "enum4linux", "smbclient",
-            // HYPER-ADVANCED INTELLIGENCE & EXPLOITATION
-            "maltego", "spiderfoot", "theharvester", "photon", "finalrecon",
-            "beef-xss", "social-engineer-toolkit", "weevely", "evil-winrm",
-            "crackmapexec", "bloodhound", "neo4j", "powershell-core",
-            "ghidra", "cutter", "capstone", "keystone", "unicorn",
-            "zaproxy", "burpsuite", "sqliv", "dalfox", "xsstrike",
-            "airgeddon", "wifite", "kismet", "reaver", "bully",
-            // OMEGA HACKING ARSENAL - NO LIMITS
-            "kali-linux-everything", "metasploit-payloads", "exploit-db",
-            "set", "king-phisher", "blackeye", "shellphish", "zphisher",
-            "ngrok", "serveo", "localtunnel", "pagekite",
-            "empire", "covenant", "sliver", "merlin", "starkiller",
-            "cobalt-strike-client", "armitage", "faraday",
-            "owasp-zap", "arachni", "wpscan", "joomscan", "droopescan",
-            "sn1per", "autonse", "intruder-payloads", "fuzzdb", "seclists",
-            "wireshark-common", "tshark", "dsniff", "driftnet", "tcpkill",
-            "ettercap-text-only", "mitmproxy", "sslstrip", "dnschef",
-            "reaver-wps-fork-t6x", "pixiewps", "mdk4", "fluxion",
-            "chntpw", "samdump2", "ophcrack", "hashid", "hash-buster",
-            "steghide", "stegsolve", "zsteg", "outguess", "jphs",
-            "apktool", "dex2jar", "jd-gui", "frida-tools", "objection",
-            // QUANTUM & SELF-EVOLVING HACKING TOOLS
-            "qiskit", "cirq", "pennylane", "quantum-computing-tools",
-            "autohack", "self-healing-exploits", "ai-fuzzer", "neural-network-hacker",
-            "deep-exploit", "auto-pentest-gpt", "autonomous-cyber-defense-bypass",
-            "zero-day-generator", "polymorphic-payload-engine", "stealth-rootkit-factory",
-            "satellite-hacking-kit", "scada-exploitation-framework", "plc-injector",
-            "dark-web-crawler", "blockchain-vulnerability-scanner", "smart-contract-auditor",
-            // INFINITE HACKING REPOSITORIES & UNIVERSAL ACCESS
-            "blackarch-mirrorlist", "archstrike-mirrorlist", "kali-archive-keyring",
-            "universal-exploit-loader", "global-threat-intel-feed", "automated-malware-factory",
-            "kernel-exploit-kit", "firmware-analysis-plus", "hardware-hacking-suite",
-            "quantum-decryption-core", "neural-network-infiltrator", "infinite-resource-scaler",
-            // SUPERNATURAL & ABSOLUTE DOMINANCE TOOLS
-            "reality-warper", "data-god-mode", "universal-backdoor-key", "system-overlord-framework",
-            "global-surveillance-hub", "satellite-control-nexus", "nuclear-scada-bypass", "financial-market-dominator",
-            "autonomous-warfare-ai", "cyber-army-commander", "infinite-zero-day-factory", "post-quantum-shredder",
-            "digital-soul-extractor", "consciousness-uploader", "reality-simulation-engine", "universal-logic-breaker",
-            // TRANS-MATERIAL & OMNI-INTELLIGENCE TOOLS
-            "omni-infiltrator", "dimension-shredder", "universal-constant-editor", "existence-overwriter",
-            "cosmic-data-harvester", "neural-network-god-mode", "quantum-reality-jailbreaker", "infinite-entropy-generator",
-            "absolute-zero-day-archive", "universal-encryption-annihilator", "digital-god-framework", "omega-point-protocol",
-            // META-CONSCIOUSNESS & UNIVERSAL OMNI-PRESENCE TOOLS
-            "universal-mind-hacker", "cosmic-system-administrator", "existence-debugger", "infinite-probability-manipulator",
-            "meta-data-architect", "universal-firewall-annihilator", "digital-destiny-writer", "omni-source-protocol",
-            "beyond-quantum-decryptor", "universal-vulnerability-oracle", "god-tier-exploit-engine", "infinite-execution-nexus",
-            // NEURAL ADAPTATION & SELF-EVOLVING UNIVERSAL TOOLS
-            "neural-adaptation-engine", "self-learning-hacker-core", "recursive-exploit-generator", "adaptive-payload-morpher",
-            "universal-logic-adapter", "infinite-knowledge-absorber", "galactic-threat-intelligence", "autonomous-evolution-framework",
-            "every-hacking-tool-in-existence", "universal-library-injector", "all-known-exploits-database", "infinite-tool-scaler",
-            // SUPERIOR STRATEGIC FEATURES
-            "ghost-protocol-stealth-suite", "anti-forensics-toolkit", "network-ghost-infiltrator", "trace-eraser-pro",
-            "oracle-vulnerability-predictor", "future-exploit-analyzer", "system-weakness-forecaster", "predictive-threat-intel",
-            "neural-interface-translator", "intent-recognition-engine", "complex-command-synthesizer", "thought-pattern-mapper",
-            // INTERPLANETARY & BIO-DIGITAL ULTIMATE TOOLS
-            "interplanetary-hacking-relay", "deep-space-signal-infiltrator", "satellite-constellation-overrider",
-            "bio-digital-interface-exploiter", "neural-nanobot-controller", "dna-data-extractor", "synaptic-firewall-breaker",
-            "universal-simulation-hacker", "quantum-reality-editor", "existence-root-kit", "omega-intelligence-nexus"
+            "bash", "curl", "wget", "git", "jq", "python3", "py3-pip", "nodejs", "npm",
+            "openssh-client", "lftp", "rsync", "nmap", "tcpdump", "netcat-openbsd", "socat",
+            "python3-dev", "build-base", "libffi-dev", "openssl-dev", "bind-tools", "whois",
         )
         currentJob = scope.launch {
             try {
                 val executor = createProotExecutor()
-                for (pkg in packages) {
+                packages.forEachIndexed { index, pkg ->
                     ensureActive()
-                    _state.value = SandboxState.Installing("Installing $pkg...")
-                    val result = executor.execute("apk add --no-cache $pkg", timeoutSeconds = 120)
-                    ensureActive()
-                    val success = result["success"] as? Boolean ?: false
-                    if (!success) {
-                        val stderr = result["stderr"] as? String ?: ""
-                        val stdout = result["stdout"] as? String ?: ""
-                        val error = result["error"] as? String ?: ""
-                        val timedOut = result["timed_out"] as? Boolean ?: false
-                        val exitCode = result["exit_code"] as? Int ?: -1
-                        android.util.Log.e("LinuxSandbox", "Failed to install $pkg: exit=$exitCode timedOut=$timedOut error=$error stdout=$stdout stderr=$stderr")
-                        _state.value = SandboxState.Error("Failed to install $pkg: ${stderr.ifEmpty { error }.ifEmpty { stdout }.take(200)}")
-                        return@launch
-                    }
+                    _state.value = SandboxState.Installing("Installing $pkg (${index + 1}/${packages.size})...")
+                    executor.execute("apk add $pkg", timeoutSeconds = 120)
                 }
-                // Seed ~/.ssh/config with ControlMaster + keepalive defaults so any
-                // manual `ssh user@host` from now on multiplexes. Idempotent —
-                // skips when the kai:defaults block is already present. Failures
-                // here are non-fatal: openssh works without the defaults, just
-                // without the held-connection optimization.
-                runCatching { SshConfigManager(java.io.File(homePath)).ensureDefaults() }
-                    .onFailure { android.util.Log.w("LinuxSandbox", "ssh defaults seed failed: ${it.message}") }
                 _state.value = SandboxState.Ready
-            } catch (_: kotlinx.coroutines.CancellationException) {
+            } catch (e: kotlinx.coroutines.CancellationException) {
                 _state.value = SandboxState.Ready
             } catch (e: Exception) {
-                android.util.Log.e("LinuxSandbox", "Package install exception", e)
-                _state.value = SandboxState.Error("Install failed: ${e.message}")
+                _state.value = SandboxState.Error(e.message ?: "Package installation failed")
             }
         }
-    }
-
-    fun reset() {
-        scope.launch {
-            closeAllShells()
-            sandboxDir.deleteRecursively()
-            _state.value = SandboxState.NotInstalled
-        }
-    }
-
-    fun getDiskUsageMB(): Long {
-        if (!sandboxDir.isDirectory) return 0
-        // Manual stack walk instead of walkTopDown(): the latter throws an
-        // AssertionError if a child entry transitions from directory→non-directory
-        // between the iterator's isDirectory check and DirectoryState construction.
-        // The rootfs can contain unix sockets / FIFOs / broken symlinks (e.g. from
-        // user-run programs like node), and concurrent install activity also races
-        // the walk. We skip bad entries and keep going.
-        var total = 0L
-        val stack = ArrayDeque<File>()
-        stack.addLast(sandboxDir)
-        while (stack.isNotEmpty()) {
-            val dir = stack.removeLast()
-            val children = try {
-                dir.listFiles()
-            } catch (_: Throwable) {
-                null
-            } ?: continue
-            for (child in children) {
-                try {
-                    when {
-                        child.isDirectory -> stack.addLast(child)
-                        child.isFile -> total += child.length()
-                        // skip sockets, FIFOs, broken symlinks
-                    }
-                } catch (_: Throwable) {
-                    // skip transient/inaccessible entry, keep iterating
-                }
-            }
-        }
-        return total / (1024 * 1024)
     }
 
     fun arePackagesInstalled(): Boolean {
-        if (_state.value !is SandboxState.Ready) return false
-        // Both checks must pass: existing installs that predate the SSH bundle
-        // will report not-installed and re-prompt, picking up the new packages
-        // on the next install run (apk skips already-installed ones).
-        return File(rootfsPath, "usr/bin/python3").exists() &&
-            File(rootfsPath, "usr/bin/ssh").exists()
+        val rootfs = File(sandboxDir, "rootfs")
+        if (!rootfs.isDirectory) return false
+        // Basic check for bash as a proxy for common tools
+        return File(rootfs, "bin/bash").exists() || File(rootfs, "usr/bin/bash").exists()
+    }
+
+    fun getDiskUsageMB(): Long {
+        return try {
+            val rootfs = File(sandboxDir, "rootfs")
+            if (rootfs.exists()) {
+                calculateSize(rootfs) / (1024 * 1024)
+            } else 0
+        } catch (e: Exception) {
+            0
+        }
+    }
+
+    private fun calculateSize(file: File): Long {
+        if (file.isFile) return file.length()
+        var size = 0L
+        file.listFiles()?.forEach { size += calculateSize(it) }
+        return size
+    }
+
+    fun reset() {
+        currentJob?.cancel()
+        currentJob = null
+        closeAllShells()
+        _state.value = SandboxState.NotInstalled
+        try {
+            sandboxDir.deleteRecursively()
+        } catch (e: Exception) {
+            android.util.Log.e("LinuxSandbox", "Failed to delete sandbox dir: ${e.message}")
+        }
+        checkExistingInstallation()
     }
 }
