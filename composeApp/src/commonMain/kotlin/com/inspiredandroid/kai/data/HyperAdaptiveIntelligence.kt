@@ -37,7 +37,7 @@ class HyperAdaptiveIntelligence(private val appSettings: AppSettings) {
     fun recordExperience(experience: IntelligenceExperience) {
         val currentExperiences = getExperiences().toMutableList()
         currentExperiences.add(experience)
-        val limitedExperiences = currentExperiences.takeLast(5000) // زيادة سعة الذاكرة
+        val limitedExperiences = currentExperiences.takeLast(100) // تحديد السعة لتجنب تضخم الذاكرة وانهيار التطبيق
         appSettings.settings.putString(KEY_EXPERIENCES, json.encodeToString(limitedExperiences))
         
         // تطوير مستوى الذكاء بشكل أسي
@@ -82,6 +82,6 @@ class HyperAdaptiveIntelligence(private val appSettings: AppSettings) {
         appSettings.setFreeMode(FreeMode.FAST)
         // تفعيل كافة المحركات الخارقة
         appSettings.settings.putBoolean("omega_mode_active", true)
-        appSettings.settings.putInt("search_concurrency_limit", 5000)
+        appSettings.settings.putInt("search_concurrency_limit", 50)
     }
 }

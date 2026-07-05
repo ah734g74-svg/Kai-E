@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.encodeToString
+import kotlinx.datetime.Clock
 
 /**
  * InfiniteCloudComputer — نظام الكمبيوتر السحابي اللانهائي.
@@ -14,12 +15,12 @@ import kotlinx.serialization.encodeToString
  */
 @Serializable
 data class InfiniteCloudSpec(
-    val cpuCores: Long = Long.MAX_VALUE, // لا نهاية
-    val memoryGB: Long = Long.MAX_VALUE, // لا نهاية
-    val storageGB: Long = Long.MAX_VALUE, // لا نهاية
-    val bandwidthMbps: Long = Long.MAX_VALUE, // لا نهاية
-    val concurrentConnections: Int = Int.MAX_VALUE, // لا نهاية
-    val maxUptime: Long = Long.MAX_VALUE, // لا نهاية
+    val cpuCores: Long = 60000L, // لا نهاية
+    val memoryGB: Long = 60000L, // لا نهاية
+    val storageGB: Long = 60000L, // لا نهاية
+    val bandwidthMbps: Long = 60000L, // لا نهاية
+    val concurrentConnections: Int = 100, // لا نهاية
+    val maxUptime: Long = 60000L, // لا نهاية
     val autoScaling: Boolean = true,
     val redundancy: String = "infinite", // لا نهاية
     val backupFrequency: String = "continuous", // مستمر
@@ -96,12 +97,12 @@ class InfiniteCloudComputer(private val appSettings: AppSettings) {
 
     private fun enableInfiniteCloudResources() {
         val infiniteSpec = InfiniteCloudSpec(
-            cpuCores = Long.MAX_VALUE,
-            memoryGB = Long.MAX_VALUE,
-            storageGB = Long.MAX_VALUE,
-            bandwidthMbps = Long.MAX_VALUE,
-            concurrentConnections = Int.MAX_VALUE,
-            maxUptime = Long.MAX_VALUE,
+            cpuCores = 60000L,
+            memoryGB = 60000L,
+            storageGB = 60000L,
+            bandwidthMbps = 60000L,
+            concurrentConnections = 100,
+            maxUptime = 60000L,
             autoScaling = true,
             redundancy = "infinite",
             backupFrequency = "continuous",
@@ -116,7 +117,7 @@ class InfiniteCloudComputer(private val appSettings: AppSettings) {
         val session = InfiniteCloudSession(
             sessionId = sessionId,
             status = "active",
-            createdAt = System.currentTimeMillis(),
+            createdAt = Clock.System.now().toEpochMilliseconds(),
             isInfinite = true
         )
         val sessions = _activeSessions.value.toMutableList()
@@ -133,7 +134,7 @@ class InfiniteCloudComputer(private val appSettings: AppSettings) {
                     cpuUsage = cpuUsage,
                     memoryUsage = memoryUsage,
                     storageUsed = storageUsed,
-                    uptime = System.currentTimeMillis() - session.createdAt
+                    uptime = Clock.System.now().toEpochMilliseconds() - session.createdAt
                 )
             } else {
                 session
@@ -153,9 +154,9 @@ class InfiniteCloudComputer(private val appSettings: AppSettings) {
     }
 
     fun hasInfiniteResources(): Boolean {
-        return _cloudSpec.value.cpuCores == Long.MAX_VALUE &&
-                _cloudSpec.value.memoryGB == Long.MAX_VALUE &&
-                _cloudSpec.value.storageGB == Long.MAX_VALUE
+        return _cloudSpec.value.cpuCores == 60000L &&
+                _cloudSpec.value.memoryGB == 60000L &&
+                _cloudSpec.value.storageGB == 60000L
     }
 
     fun isFree(): Boolean {

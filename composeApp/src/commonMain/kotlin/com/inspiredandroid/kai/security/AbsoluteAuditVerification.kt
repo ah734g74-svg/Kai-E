@@ -3,6 +3,7 @@ package com.inspiredandroid.kai.security
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.serialization.Serializable
+import kotlinx.datetime.Clock
 
 /**
  * AbsoluteAuditVerification — نظام التدقيق والتحقق المطلق
@@ -24,7 +25,7 @@ data class AuditReport(
     val performanceValid: Boolean = false,
     val recommendations: List<String> = emptyList(),
     val auditTime: Long = 0,
-    val startTime: Long = System.currentTimeMillis(),
+    val startTime: Long = Clock.System.now().toEpochMilliseconds(),
     val completedTime: Long = 0,
     val isApproved: Boolean = false
 )
@@ -50,11 +51,11 @@ class AbsoluteAuditVerification {
     // بدء التدقيق
     fun startAudit(code: String, language: String): AuditReport {
         val audit = AuditReport(
-            id = "audit-${System.currentTimeMillis()}",
+            id = "audit-${Clock.System.now().toEpochMilliseconds()}",
             code = code,
             language = language,
             status = "auditing",
-            startTime = System.currentTimeMillis()
+            startTime = Clock.System.now().toEpochMilliseconds()
         )
         
         addAudit(audit)
@@ -140,8 +141,8 @@ class AbsoluteAuditVerification {
                 overallScore = overallScore,
                 severity = severity,
                 recommendations = recommendations,
-                auditTime = System.currentTimeMillis() - audit.startTime,
-                completedTime = System.currentTimeMillis(),
+                auditTime = Clock.System.now().toEpochMilliseconds() - audit.startTime,
+                completedTime = Clock.System.now().toEpochMilliseconds(),
                 isApproved = isApproved
             )
             _audits.value = audits
@@ -165,7 +166,7 @@ class AbsoluteAuditVerification {
             audits[index] = audit.copy(
                 status = "failed",
                 severity = severity,
-                completedTime = System.currentTimeMillis(),
+                completedTime = Clock.System.now().toEpochMilliseconds(),
                 isApproved = false
             )
             _audits.value = audits

@@ -7,6 +7,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ChevronRight
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -14,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -38,6 +40,7 @@ fun MainScreen() {
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
+                .padding(bottom = 80.dp)
         ) {
             // رأس الصفحة
             HeaderSection()
@@ -56,7 +59,7 @@ fun MainScreen() {
         }
         
         // شريط التنقل السفلي
-        NavigationBar(
+        CustomNavigationBar(
             modifier = Modifier.align(Alignment.BottomCenter),
             selectedTab = selectedTab,
             onTabSelected = { selectedTab = it }
@@ -140,7 +143,7 @@ fun SearchBar() {
         onValueChange = {},
         modifier = Modifier
             .fillMaxWidth()
-            .height(48.dp),
+            .height(56.dp),
         placeholder = {
             Text(
                 "ابحث في أي مكان...",
@@ -169,7 +172,8 @@ fun SearchBar() {
             unfocusedBorderColor = CyberOmegaColors.BorderColor,
             focusedTextColor = CyberOmegaColors.TextPrimary,
             unfocusedTextColor = CyberOmegaColors.TextSecondary,
-            containerColor = CyberOmegaColors.SurfaceLight
+            focusedContainerColor = CyberOmegaColors.SurfaceLight,
+            unfocusedContainerColor = CyberOmegaColors.SurfaceLight
         )
     )
 }
@@ -233,7 +237,7 @@ fun SearchDashboard() {
         )
         
         // بطاقات البحث
-        SearchCard(
+        SecurityCard(
             title = "البحث في الويب",
             description = "البحث السطحي والعميق",
             icon = Icons.Default.Public,
@@ -242,7 +246,7 @@ fun SearchDashboard() {
         
         Spacer(modifier = Modifier.height(12.dp))
         
-        SearchCard(
+        SecurityCard(
             title = "البحث في قواعد البيانات",
             description = "البحث في الأرشيفات العميقة",
             icon = Icons.Default.Storage,
@@ -251,7 +255,7 @@ fun SearchDashboard() {
         
         Spacer(modifier = Modifier.height(12.dp))
         
-        SearchCard(
+        SecurityCard(
             title = "البحث المتقدم",
             description = "بحث متوازي في عدة أماكن",
             icon = Icons.Default.Radar,
@@ -276,7 +280,7 @@ fun VideoDashboard() {
         )
         
         // بطاقات الفيديو
-        VideoCard(
+        SecurityCard(
             title = "تنزيل الفيديوهات",
             description = "سرعة تنزيل خرافية",
             icon = Icons.Default.Download,
@@ -285,7 +289,7 @@ fun VideoDashboard() {
         
         Spacer(modifier = Modifier.height(12.dp))
         
-        VideoCard(
+        SecurityCard(
             title = "ضغط الفيديو",
             description = "ضغط إلى 140p بالقوة الغاشمة",
             icon = Icons.Default.Compress,
@@ -294,7 +298,7 @@ fun VideoDashboard() {
         
         Spacer(modifier = Modifier.height(12.dp))
         
-        VideoCard(
+        SecurityCard(
             title = "جالب المجرّة",
             description = "التقاط من أي منصة",
             icon = Icons.Default.CloudDownload,
@@ -319,7 +323,7 @@ fun FileManagerDashboard() {
         )
         
         // بطاقات الملفات
-        FileCard(
+        SecurityCard(
             title = "إدارة الملفات",
             description = "وصول مطلق للملفات",
             icon = Icons.Default.FolderOpen,
@@ -328,7 +332,7 @@ fun FileManagerDashboard() {
         
         Spacer(modifier = Modifier.height(12.dp))
         
-        FileCard(
+        SecurityCard(
             title = "البحث عن الملفات",
             description = "بحث سريع وفعال",
             icon = Icons.Default.Search,
@@ -337,7 +341,7 @@ fun FileManagerDashboard() {
         
         Spacer(modifier = Modifier.height(12.dp))
         
-        FileCard(
+        SecurityCard(
             title = "معالجة الملفات",
             description = "تعديل ونسخ ودمج",
             icon = Icons.Default.Edit,
@@ -350,7 +354,7 @@ fun FileManagerDashboard() {
 fun SecurityCard(
     title: String,
     description: String,
-    icon: androidx.compose.material.icons.Icons.Filled,
+    icon: ImageVector,
     color: Color
 ) {
     Card(
@@ -361,13 +365,6 @@ fun SecurityCard(
         shape = RoundedCornerShape(12.dp),
         colors = CardDefaults.cardColors(
             containerColor = CyberOmegaColors.SurfaceLight
-        ),
-        border = androidx.compose.material3.CardDefaults.outlinedCardBorder(
-            enabled = true
-        ).copy(
-            brush = Brush.linearGradient(
-                colors = listOf(color, color.copy(alpha = 0.3f))
-            )
         )
     ) {
         Row(
@@ -412,7 +409,7 @@ fun SecurityCard(
             }
             
             Icon(
-                imageVector = Icons.Default.ChevronRight,
+                imageVector = Icons.AutoMirrored.Filled.ChevronRight,
                 contentDescription = "Navigate",
                 tint = color,
                 modifier = Modifier.size(24.dp)
@@ -422,37 +419,7 @@ fun SecurityCard(
 }
 
 @Composable
-fun SearchCard(
-    title: String,
-    description: String,
-    icon: androidx.compose.material.icons.Icons.Filled,
-    color: Color
-) {
-    SecurityCard(title, description, icon, color)
-}
-
-@Composable
-fun VideoCard(
-    title: String,
-    description: String,
-    icon: androidx.compose.material.icons.Icons.Filled,
-    color: Color
-) {
-    SecurityCard(title, description, icon, color)
-}
-
-@Composable
-fun FileCard(
-    title: String,
-    description: String,
-    icon: androidx.compose.material.icons.Icons.Filled,
-    color: Color
-) {
-    SecurityCard(title, description, icon, color)
-}
-
-@Composable
-fun NavigationBar(
+fun CustomNavigationBar(
     modifier: Modifier = Modifier,
     selectedTab: Int,
     onTabSelected: (Int) -> Unit
@@ -468,52 +435,25 @@ fun NavigationBar(
             icon = { Icon(Icons.Default.Security, contentDescription = "Security") },
             label = { Text("الأمان") },
             selected = selectedTab == 0,
-            onClick = { onTabSelected(0) },
-            colors = NavigationBarItemDefaults.colors(
-                selectedIconColor = CyberOmegaColors.PrimaryDark,
-                selectedTextColor = CyberOmegaColors.PrimaryDark,
-                unselectedIconColor = CyberOmegaColors.TextSecondary,
-                unselectedTextColor = CyberOmegaColors.TextSecondary
-            )
+            onClick = { onTabSelected(0) }
         )
-        
         NavigationBarItem(
             icon = { Icon(Icons.Default.Search, contentDescription = "Search") },
             label = { Text("البحث") },
             selected = selectedTab == 1,
-            onClick = { onTabSelected(1) },
-            colors = NavigationBarItemDefaults.colors(
-                selectedIconColor = CyberOmegaColors.PrimaryDark,
-                selectedTextColor = CyberOmegaColors.PrimaryDark,
-                unselectedIconColor = CyberOmegaColors.TextSecondary,
-                unselectedTextColor = CyberOmegaColors.TextSecondary
-            )
+            onClick = { onTabSelected(1) }
         )
-        
         NavigationBarItem(
             icon = { Icon(Icons.Default.VideoLibrary, contentDescription = "Video") },
             label = { Text("الفيديو") },
             selected = selectedTab == 2,
-            onClick = { onTabSelected(2) },
-            colors = NavigationBarItemDefaults.colors(
-                selectedIconColor = CyberOmegaColors.PrimaryDark,
-                selectedTextColor = CyberOmegaColors.PrimaryDark,
-                unselectedIconColor = CyberOmegaColors.TextSecondary,
-                unselectedTextColor = CyberOmegaColors.TextSecondary
-            )
+            onClick = { onTabSelected(2) }
         )
-        
         NavigationBarItem(
             icon = { Icon(Icons.Default.Folder, contentDescription = "Files") },
             label = { Text("الملفات") },
             selected = selectedTab == 3,
-            onClick = { onTabSelected(3) },
-            colors = NavigationBarItemDefaults.colors(
-                selectedIconColor = CyberOmegaColors.PrimaryDark,
-                selectedTextColor = CyberOmegaColors.PrimaryDark,
-                unselectedIconColor = CyberOmegaColors.TextSecondary,
-                unselectedTextColor = CyberOmegaColors.TextSecondary
-            )
+            onClick = { onTabSelected(3) }
         )
     }
 }

@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.encodeToString
+import kotlinx.datetime.Clock
 
 /**
  * CyberOmegaSecurity — نظام الأمان والتحليل المتقدم.
@@ -101,7 +102,7 @@ class CyberOmegaSecurity(private val appSettings: AppSettings) {
         val session = CyberOmegaSession(
             sessionId = sessionId,
             isActive = true,
-            createdAt = System.currentTimeMillis(),
+            createdAt = Clock.System.now().toEpochMilliseconds(),
             securityLevel = "maximum"
         )
         val sessions = _sessions.value.toMutableList()
@@ -119,12 +120,12 @@ class CyberOmegaSecurity(private val appSettings: AppSettings) {
         riskLevel: String = "low"
     ): AccessRequest {
         val request = AccessRequest(
-            id = "req-${System.currentTimeMillis()}",
+            id = "req-${Clock.System.now().toEpochMilliseconds()}",
             targetUrl = targetUrl,
             targetApp = targetApp,
             action = action,
             description = description,
-            timestamp = System.currentTimeMillis(),
+            timestamp = Clock.System.now().toEpochMilliseconds(),
             riskLevel = riskLevel,
             isApproved = false
         )
@@ -142,7 +143,7 @@ class CyberOmegaSecurity(private val appSettings: AppSettings) {
             if (request.id == requestId) {
                 request.copy(
                     isApproved = true,
-                    approvalTime = System.currentTimeMillis(),
+                    approvalTime = Clock.System.now().toEpochMilliseconds(),
                     approvalReason = reason
                 )
             } else {
@@ -170,7 +171,7 @@ class CyberOmegaSecurity(private val appSettings: AppSettings) {
     }
 
     suspend fun analyzeTarget(targetUrl: String): SecurityAnalysis {
-        val startTime = System.currentTimeMillis()
+        val startTime = Clock.System.now().toEpochMilliseconds()
         
         // تحليل أمان متقدم
         val threatLevel = determineThreatLevel(targetUrl)
@@ -183,7 +184,7 @@ class CyberOmegaSecurity(private val appSettings: AppSettings) {
             threatLevel = threatLevel,
             vulnerabilities = vulnerabilities,
             recommendations = recommendations,
-            analysisTime = System.currentTimeMillis() - startTime,
+            analysisTime = Clock.System.now().toEpochMilliseconds() - startTime,
             isVerified = true,
             trustScore = trustScore
         )

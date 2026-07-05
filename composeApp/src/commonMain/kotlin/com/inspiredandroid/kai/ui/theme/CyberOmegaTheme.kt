@@ -6,6 +6,7 @@ import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.sp
 
 /**
  * CyberOmegaTheme — تصميم "Cyber-Omega Dark" الأساسي
@@ -126,97 +127,97 @@ private val CyberOmegaLightColorScheme = lightColorScheme(
 object CyberOmegaTypography {
     // عناوين كبيرة
     val DisplayLarge = androidx.compose.material3.Typography().displayLarge.copy(
-        fontSize = androidx.compose.ui.unit.sp(57),
-        lineHeight = androidx.compose.ui.unit.sp(64),
-        letterSpacing = androidx.compose.ui.unit.sp(-0.25)
+        fontSize = 57.sp,
+        lineHeight = 64.sp,
+        letterSpacing = (-0.25).sp
     )
     
     val DisplayMedium = androidx.compose.material3.Typography().displayMedium.copy(
-        fontSize = androidx.compose.ui.unit.sp(45),
-        lineHeight = androidx.compose.ui.unit.sp(52),
-        letterSpacing = androidx.compose.ui.unit.sp(0)
+        fontSize = 45.sp,
+        lineHeight = 52.sp,
+        letterSpacing = 0.sp
     )
     
     val DisplaySmall = androidx.compose.material3.Typography().displaySmall.copy(
-        fontSize = androidx.compose.ui.unit.sp(36),
-        lineHeight = androidx.compose.ui.unit.sp(44),
-        letterSpacing = androidx.compose.ui.unit.sp(0)
+        fontSize = 36.sp,
+        lineHeight = 44.sp,
+        letterSpacing = 0.sp
     )
     
     // عناوين متوسطة
     val HeadlineLarge = androidx.compose.material3.Typography().headlineLarge.copy(
-        fontSize = androidx.compose.ui.unit.sp(32),
-        lineHeight = androidx.compose.ui.unit.sp(40),
-        letterSpacing = androidx.compose.ui.unit.sp(0)
+        fontSize = 32.sp,
+        lineHeight = 40.sp,
+        letterSpacing = 0.sp
     )
     
     val HeadlineMedium = androidx.compose.material3.Typography().headlineMedium.copy(
-        fontSize = androidx.compose.ui.unit.sp(28),
-        lineHeight = androidx.compose.ui.unit.sp(36),
-        letterSpacing = androidx.compose.ui.unit.sp(0)
+        fontSize = 28.sp,
+        lineHeight = 36.sp,
+        letterSpacing = 0.sp
     )
     
     val HeadlineSmall = androidx.compose.material3.Typography().headlineSmall.copy(
-        fontSize = androidx.compose.ui.unit.sp(24),
-        lineHeight = androidx.compose.ui.unit.sp(32),
-        letterSpacing = androidx.compose.ui.unit.sp(0)
+        fontSize = 24.sp,
+        lineHeight = 32.sp,
+        letterSpacing = 0.sp
     )
     
     // عناوين صغيرة
     val TitleLarge = androidx.compose.material3.Typography().titleLarge.copy(
-        fontSize = androidx.compose.ui.unit.sp(22),
-        lineHeight = androidx.compose.ui.unit.sp(28),
-        letterSpacing = androidx.compose.ui.unit.sp(0)
+        fontSize = 22.sp,
+        lineHeight = 28.sp,
+        letterSpacing = 0.sp
     )
     
     val TitleMedium = androidx.compose.material3.Typography().titleMedium.copy(
-        fontSize = androidx.compose.ui.unit.sp(16),
-        lineHeight = androidx.compose.ui.unit.sp(24),
-        letterSpacing = androidx.compose.ui.unit.sp(0.15)
+        fontSize = 16.sp,
+        lineHeight = 24.sp,
+        letterSpacing = 0.15.sp
     )
     
     val TitleSmall = androidx.compose.material3.Typography().titleSmall.copy(
-        fontSize = androidx.compose.ui.unit.sp(14),
-        lineHeight = androidx.compose.ui.unit.sp(20),
-        letterSpacing = androidx.compose.ui.unit.sp(0.1)
+        fontSize = 14.sp,
+        lineHeight = 20.sp,
+        letterSpacing = 0.1.sp
     )
     
     // نصوص عادية
     val BodyLarge = androidx.compose.material3.Typography().bodyLarge.copy(
-        fontSize = androidx.compose.ui.unit.sp(16),
-        lineHeight = androidx.compose.ui.unit.sp(24),
-        letterSpacing = androidx.compose.ui.unit.sp(0.5)
+        fontSize = 16.sp,
+        lineHeight = 24.sp,
+        letterSpacing = 0.5.sp
     )
     
     val BodyMedium = androidx.compose.material3.Typography().bodyMedium.copy(
-        fontSize = androidx.compose.ui.unit.sp(14),
-        lineHeight = androidx.compose.ui.unit.sp(20),
-        letterSpacing = androidx.compose.ui.unit.sp(0.25)
+        fontSize = 14.sp,
+        lineHeight = 20.sp,
+        letterSpacing = 0.25.sp
     )
     
     val BodySmall = androidx.compose.material3.Typography().bodySmall.copy(
-        fontSize = androidx.compose.ui.unit.sp(12),
-        lineHeight = androidx.compose.ui.unit.sp(16),
-        letterSpacing = androidx.compose.ui.unit.sp(0.4)
+        fontSize = 12.sp,
+        lineHeight = 16.sp,
+        letterSpacing = 0.4.sp
     )
     
     // تسميات
     val LabelLarge = androidx.compose.material3.Typography().labelLarge.copy(
-        fontSize = androidx.compose.ui.unit.sp(14),
-        lineHeight = androidx.compose.ui.unit.sp(20),
-        letterSpacing = androidx.compose.ui.unit.sp(0.1)
+        fontSize = 14.sp,
+        lineHeight = 20.sp,
+        letterSpacing = 0.1.sp
     )
     
     val LabelMedium = androidx.compose.material3.Typography().labelMedium.copy(
-        fontSize = androidx.compose.ui.unit.sp(12),
-        lineHeight = androidx.compose.ui.unit.sp(16),
-        letterSpacing = androidx.compose.ui.unit.sp(0.5)
+        fontSize = 12.sp,
+        lineHeight = 16.sp,
+        letterSpacing = 0.5.sp
     )
     
     val LabelSmall = androidx.compose.material3.Typography().labelSmall.copy(
-        fontSize = androidx.compose.ui.unit.sp(11),
-        lineHeight = androidx.compose.ui.unit.sp(16),
-        letterSpacing = androidx.compose.ui.unit.sp(0.5)
+        fontSize = 11.sp,
+        lineHeight = 16.sp,
+        letterSpacing = 0.5.sp
     )
 }
 

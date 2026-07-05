@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.encodeToString
+import kotlinx.datetime.Clock
 
 /**
  * InfiniteResourceEngine — محرك جلب الموارد اللانهائية.
@@ -16,9 +17,9 @@ import kotlinx.serialization.encodeToString
 data class ResourceAllocation(
     val resourceId: String,
     val type: String, // cpu, memory, storage, bandwidth, threads
-    val allocated: Long = Long.MAX_VALUE,
+    val allocated: Long = 60000L,
     val used: Long = 0,
-    val available: Long = Long.MAX_VALUE,
+    val available: Long = 60000L,
     val priority: String = "maximum",
     val isInfinite: Boolean = true
 )
@@ -33,7 +34,7 @@ data class ResourcePool(
     val connections: ResourceAllocation = ResourceAllocation("connections", "connections"),
     val cacheSize: ResourceAllocation = ResourceAllocation("cache-size", "storage"),
     val bufferSize: ResourceAllocation = ResourceAllocation("buffer-size", "memory"),
-    val totalAllocated: Long = Long.MAX_VALUE,
+    val totalAllocated: Long = 60000L,
     val totalUsed: Long = 0,
     val isInfinite: Boolean = true
 )
@@ -45,8 +46,8 @@ data class ResourceUsageMetrics(
     val memoryUsage: Float = 0f,
     val storageUsage: Float = 0f,
     val bandwidthUsage: Float = 0f,
-    val activeThreads: Int = Int.MAX_VALUE,
-    val activeConnections: Int = Int.MAX_VALUE,
+    val activeThreads: Int = 100,
+    val activeConnections: Int = 100,
     val cacheHitRate: Float = 100f,
     val efficiency: Float = 100f
 )
@@ -81,15 +82,15 @@ class InfiniteResourceEngine(private val appSettings: AppSettings) {
 
     private fun initializeInfiniteResources() {
         val infinitePool = ResourcePool(
-            cpuCores = ResourceAllocation("cpu-cores", "cpu", Long.MAX_VALUE, 0, Long.MAX_VALUE, "maximum", true),
-            memoryGB = ResourceAllocation("memory-gb", "memory", Long.MAX_VALUE, 0, Long.MAX_VALUE, "maximum", true),
-            storageGB = ResourceAllocation("storage-gb", "storage", Long.MAX_VALUE, 0, Long.MAX_VALUE, "maximum", true),
-            bandwidthMbps = ResourceAllocation("bandwidth-mbps", "bandwidth", Long.MAX_VALUE, 0, Long.MAX_VALUE, "maximum", true),
-            threads = ResourceAllocation("threads", "threads", Long.MAX_VALUE, 0, Long.MAX_VALUE, "maximum", true),
-            connections = ResourceAllocation("connections", "connections", Long.MAX_VALUE, 0, Long.MAX_VALUE, "maximum", true),
-            cacheSize = ResourceAllocation("cache-size", "storage", Long.MAX_VALUE, 0, Long.MAX_VALUE, "maximum", true),
-            bufferSize = ResourceAllocation("buffer-size", "memory", Long.MAX_VALUE, 0, Long.MAX_VALUE, "maximum", true),
-            totalAllocated = Long.MAX_VALUE,
+            cpuCores = ResourceAllocation("cpu-cores", "cpu", 60000L, 0, 60000L, "maximum", true),
+            memoryGB = ResourceAllocation("memory-gb", "memory", 60000L, 0, 60000L, "maximum", true),
+            storageGB = ResourceAllocation("storage-gb", "storage", 60000L, 0, 60000L, "maximum", true),
+            bandwidthMbps = ResourceAllocation("bandwidth-mbps", "bandwidth", 60000L, 0, 60000L, "maximum", true),
+            threads = ResourceAllocation("threads", "threads", 60000L, 0, 60000L, "maximum", true),
+            connections = ResourceAllocation("connections", "connections", 60000L, 0, 60000L, "maximum", true),
+            cacheSize = ResourceAllocation("cache-size", "storage", 60000L, 0, 60000L, "maximum", true),
+            bufferSize = ResourceAllocation("buffer-size", "memory", 60000L, 0, 60000L, "maximum", true),
+            totalAllocated = 60000L,
             totalUsed = 0,
             isInfinite = true
         )
@@ -98,11 +99,11 @@ class InfiniteResourceEngine(private val appSettings: AppSettings) {
     }
 
     suspend fun allocateResources(
-        cpuCores: Long = Long.MAX_VALUE,
-        memoryGB: Long = Long.MAX_VALUE,
-        storageGB: Long = Long.MAX_VALUE,
-        bandwidthMbps: Long = Long.MAX_VALUE,
-        threads: Int = Int.MAX_VALUE
+        cpuCores: Long = 60000L,
+        memoryGB: Long = 60000L,
+        storageGB: Long = 60000L,
+        bandwidthMbps: Long = 60000L,
+        threads: Int = 100
     ): ResourcePool {
         val currentPool = _resourcePool.value
         
@@ -184,7 +185,7 @@ class InfiniteResourceEngine(private val appSettings: AppSettings) {
         val metrics = _usageMetrics.value
         return if (metrics.isNotEmpty()) {
             ResourceUsageMetrics(
-                timestamp = System.currentTimeMillis(),
+                timestamp = Clock.System.now().toEpochMilliseconds(),
                 cpuUsage = metrics.map { it.cpuUsage }.average().toFloat(),
                 memoryUsage = metrics.map { it.memoryUsage }.average().toFloat(),
                 storageUsage = metrics.map { it.storageUsage }.average().toFloat(),

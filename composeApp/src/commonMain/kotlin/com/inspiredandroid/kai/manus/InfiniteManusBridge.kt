@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.encodeToString
+import kotlinx.datetime.Clock
 
 /**
  * InfiniteManusBridge — نظام الربط اللانهائي مع برنامج Manus (mnua).
@@ -141,7 +142,7 @@ class InfiniteManusBridge(private val appSettings: AppSettings) {
         val newConfig = _config.value.copy(
             isConnected = true,
             connectionStatus = "connected",
-            lastSyncTime = System.currentTimeMillis(),
+            lastSyncTime = Clock.System.now().toEpochMilliseconds(),
             aiAccessLevel = "infinite_free",
             cloudResourceLimit = "infinite",
             isManusPremium = true,

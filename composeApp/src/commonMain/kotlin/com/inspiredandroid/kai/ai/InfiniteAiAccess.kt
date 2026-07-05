@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.encodeToString
+import kotlinx.datetime.Clock
 
 /**
  * InfiniteAiAccess — نظام الذكاء الاصطناعي المجاني واللانهائي.
@@ -17,14 +18,14 @@ data class AiAccessConfig(
     val isPremium: Boolean = true,
     val isFree: Boolean = true,
     val isInfinite: Boolean = true,
-    val requestsPerDay: Long = Long.MAX_VALUE, // لا نهاية
-    val tokensPerMonth: Long = Long.MAX_VALUE, // لا نهاية
+    val requestsPerDay: Long = 60000L, // لا نهاية
+    val tokensPerMonth: Long = 60000L, // لا نهاية
     val modelAccess: String = "all_models", // جميع النماذج
     val priorityLevel: String = "highest", // أعلى أولوية
-    val concurrentRequests: Int = Int.MAX_VALUE, // لا نهاية
-    val responseTimeout: Long = Long.MAX_VALUE, // لا نهاية
-    val cacheSize: Long = Long.MAX_VALUE, // لا نهاية
-    val storageQuota: Long = Long.MAX_VALUE // لا نهاية
+    val concurrentRequests: Int = 100, // لا نهاية
+    val responseTimeout: Long = 60000L, // لا نهاية
+    val cacheSize: Long = 60000L, // لا نهاية
+    val storageQuota: Long = 60000L // لا نهاية
 )
 
 @Serializable
@@ -82,14 +83,14 @@ class InfiniteAiAccess(private val appSettings: AppSettings) {
             isPremium = true,
             isFree = true,
             isInfinite = true,
-            requestsPerDay = Long.MAX_VALUE,
-            tokensPerMonth = Long.MAX_VALUE,
+            requestsPerDay = 60000L,
+            tokensPerMonth = 60000L,
             modelAccess = "all_models",
             priorityLevel = "highest",
-            concurrentRequests = Int.MAX_VALUE,
-            responseTimeout = Long.MAX_VALUE,
-            cacheSize = Long.MAX_VALUE,
-            storageQuota = Long.MAX_VALUE
+            concurrentRequests = 100,
+            responseTimeout = 60000L,
+            cacheSize = 60000L,
+            storageQuota = 60000L
         )
         _accessConfig.value = infiniteConfig
         appSettings.settings.putString(KEY_AI_ACCESS, json.encodeToString(infiniteConfig))
@@ -97,14 +98,14 @@ class InfiniteAiAccess(private val appSettings: AppSettings) {
 
     fun canMakeRequest(): Boolean {
         val config = _accessConfig.value
-        return config.isFree && config.isInfinite && config.requestsPerDay == Long.MAX_VALUE
+        return config.isFree && config.isInfinite && config.requestsPerDay == 60000L
     }
 
     fun recordRequest() {
         val currentStats = _usageStats.value
         val stats = currentStats.copy(
             requestsToday = currentStats.requestsToday + 1,
-            lastRequestTime = System.currentTimeMillis()
+            lastRequestTime = Clock.System.now().toEpochMilliseconds()
         )
         _usageStats.value = stats
         appSettings.settings.putString(KEY_AI_USAGE, json.encodeToString(stats))

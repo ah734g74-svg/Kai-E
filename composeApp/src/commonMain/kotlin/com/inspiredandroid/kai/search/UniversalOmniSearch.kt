@@ -3,6 +3,7 @@ package com.inspiredandroid.kai.search
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.serialization.Serializable
+import kotlinx.datetime.Clock
 
 /**
  * UniversalOmniSearch — محرك البحث الشامل المطلق
@@ -20,7 +21,7 @@ data class SearchQuery(
     val results: List<SearchResult> = emptyList(),
     val resultCount: Int = 0,
     val searchTime: Long = 0,
-    val startTime: Long = System.currentTimeMillis(),
+    val startTime: Long = Clock.System.now().toEpochMilliseconds(),
     val completedTime: Long = 0,
     val sortBy: String = "relevance" // relevance, date, size, popularity
 )
@@ -120,12 +121,12 @@ class UniversalOmniSearch {
         sortBy: String = "relevance"
     ): SearchQuery {
         val search = SearchQuery(
-            id = "search-${System.currentTimeMillis()}",
+            id = "search-${Clock.System.now().toEpochMilliseconds()}",
             query = query,
             searchScope = searchScope,
             searchType = searchType,
             status = "searching",
-            startTime = System.currentTimeMillis(),
+            startTime = Clock.System.now().toEpochMilliseconds(),
             sortBy = sortBy
         )
         
@@ -190,13 +191,13 @@ class UniversalOmniSearch {
         scope: String = "all"
     ): SearchQuery {
         val search = SearchQuery(
-            id = "search-${System.currentTimeMillis()}",
+            id = "search-${Clock.System.now().toEpochMilliseconds()}",
             query = query,
             searchScope = scope,
             searchType = "text",
             filters = filters,
             status = "searching",
-            startTime = System.currentTimeMillis()
+            startTime = Clock.System.now().toEpochMilliseconds()
         )
         
         addSearch(search)
@@ -218,8 +219,8 @@ class UniversalOmniSearch {
                 status = status,
                 results = results,
                 resultCount = results.size,
-                searchTime = System.currentTimeMillis() - search.startTime,
-                completedTime = if (status == "completed" || status == "failed") System.currentTimeMillis() else 0
+                searchTime = Clock.System.now().toEpochMilliseconds() - search.startTime,
+                completedTime = if (status == "completed" || status == "failed") Clock.System.now().toEpochMilliseconds() else 0
             )
             _searches.value = searches
             
