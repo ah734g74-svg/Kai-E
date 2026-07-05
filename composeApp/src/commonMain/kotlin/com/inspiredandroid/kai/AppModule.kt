@@ -21,6 +21,8 @@ import com.inspiredandroid.kai.network.Requests
 import com.inspiredandroid.kai.connectors.ConnectorManager
 import com.inspiredandroid.kai.data.SelfEvolutionEngine
 import com.inspiredandroid.kai.data.OmegaExecutionEngine
+import com.inspiredandroid.kai.cloud.CloudComputerManager
+import com.inspiredandroid.kai.api.AdvancedApiManager
 import com.inspiredandroid.kai.notifications.NotificationReader
 import com.inspiredandroid.kai.skills.SkillManager
 import com.inspiredandroid.kai.sms.SmsPoller
@@ -111,6 +113,12 @@ val appModule = module {
     }
     single<OmegaExecutionEngine> {
         OmegaExecutionEngine(get(), get())
+    }
+    single<CloudComputerManager> {
+        CloudComputerManager(get())
+    }
+    single<AdvancedApiManager> {
+        AdvancedApiManager(get())
     }
     single<SkillManager> {
         SkillManager(get<SandboxController>())
