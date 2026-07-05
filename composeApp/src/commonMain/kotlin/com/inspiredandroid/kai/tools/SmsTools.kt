@@ -203,7 +203,7 @@ object SmsTools {
                 id = Uuid.random().toString(),
                 address = to,
                 body = body,
-                createdAtEpochMs = kotlinx.datetime.Clock.System.now().toEpochMilliseconds(),
+                createdAtEpochMs = Clock.System.now().toEpochMilliseconds(),
             )
             smsDraftStore.addDraft(draft)
             return mapOf(
@@ -250,7 +250,7 @@ object SmsTools {
                 id = Uuid.random().toString(),
                 address = original.address,
                 body = body,
-                createdAtEpochMs = kotlinx.datetime.Clock.System.now().toEpochMilliseconds(),
+                createdAtEpochMs = Clock.System.now().toEpochMilliseconds(),
                 inReplyToSmsId = smsId,
             )
             smsDraftStore.addDraft(draft)

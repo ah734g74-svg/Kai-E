@@ -1,5 +1,7 @@
 package com.inspiredandroid.kai.audit
 
+import kotlin.time.Clock
+
 import com.inspiredandroid.kai.data.AppSettings
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -93,7 +95,7 @@ class DeepCodeAuditor(private val appSettings: AppSettings) {
     }
 
     suspend fun auditCode(codeId: String, code: String): CodeAuditReport {
-        val startTime = kotlinx.datetime.Clock.System.now().toEpochMilliseconds()
+        val startTime = Clock.System.now().toEpochMilliseconds()
         
         // تحليل شامل للكود
         val syntaxIssues = checkSyntax(code)
@@ -118,7 +120,7 @@ class DeepCodeAuditor(private val appSettings: AppSettings) {
             styleIssues = styleIssues.size,
             overallScore = overallScore,
             isApproved = isApproved,
-            auditTime = kotlinx.datetime.Clock.System.now().toEpochMilliseconds() - startTime,
+            auditTime = Clock.System.now().toEpochMilliseconds() - startTime,
             recommendations = recommendations
         )
         

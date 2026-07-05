@@ -12,7 +12,7 @@ class SmsPoller(
     suspend fun poll() {
         if (!smsReader.isSupported()) return
         val syncState = smsStore.getSyncState()
-        val attemptAt = kotlinx.datetime.Clock.System.now().toEpochMilliseconds()
+        val attemptAt = Clock.System.now().toEpochMilliseconds()
         try {
             if (!smsReader.hasPermission()) {
                 smsStore.updateSyncState(

@@ -1,5 +1,7 @@
 package com.inspiredandroid.kai.data
 
+import kotlin.time.Clock
+
 import kotlinx.coroutines.delay
 
 /**
@@ -47,10 +49,10 @@ class SelfEvolutionEngine(private val appSettings: AppSettings) {
      * مراقبة الأداء الفعلي (Runtime Monitoring).
      */
     fun monitorRuntime(action: () -> Unit) {
-        val startTime = kotlinx.datetime.Clock.System.now().toEpochMilliseconds()
+        val startTime = Clock.System.now().toEpochMilliseconds()
         try {
             action()
-            val duration = kotlinx.datetime.Clock.System.now().toEpochMilliseconds() - startTime
+            val duration = Clock.System.now().toEpochMilliseconds() - startTime
             if (duration > 1000) {
                 // إذا كان الأداء بطيئاً، يتم تسجيل ذلك للتحسين المستقبلي
                 appSettings.settings.putLong("last_slow_execution", duration)

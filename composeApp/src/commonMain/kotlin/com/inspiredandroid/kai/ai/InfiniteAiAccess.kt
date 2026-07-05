@@ -1,5 +1,7 @@
 package com.inspiredandroid.kai.ai
 
+import kotlin.time.Clock
+
 import com.inspiredandroid.kai.data.AppSettings
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -104,7 +106,7 @@ class InfiniteAiAccess(private val appSettings: AppSettings) {
         val currentStats = _usageStats.value
         val stats = currentStats.copy(
             requestsToday = currentStats.requestsToday + 1,
-            lastRequestTime = kotlinx.datetime.kotlinx.datetime.Clock.System.now().toEpochMilliseconds()
+            lastRequestTime = Clock.System.now().toEpochMilliseconds()
         )
         _usageStats.value = stats
         appSettings.settings.putString(KEY_AI_USAGE, json.encodeToString(stats))

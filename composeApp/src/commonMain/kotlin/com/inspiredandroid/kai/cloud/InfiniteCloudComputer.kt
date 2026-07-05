@@ -1,5 +1,7 @@
 package com.inspiredandroid.kai.cloud
 
+import kotlin.time.Clock
+
 import com.inspiredandroid.kai.data.AppSettings
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -116,7 +118,7 @@ class InfiniteCloudComputer(private val appSettings: AppSettings) {
         val session = InfiniteCloudSession(
             sessionId = sessionId,
             status = "active",
-            createdAt = kotlinx.datetime.Clock.System.now().toEpochMilliseconds(),
+            createdAt = Clock.System.now().toEpochMilliseconds(),
             isInfinite = true
         )
         val sessions = _activeSessions.value.toMutableList()
@@ -133,7 +135,7 @@ class InfiniteCloudComputer(private val appSettings: AppSettings) {
                     cpuUsage = cpuUsage,
                     memoryUsage = memoryUsage,
                     storageUsed = storageUsed,
-                    uptime = kotlinx.datetime.Clock.System.now().toEpochMilliseconds() - session.createdAt
+                    uptime = Clock.System.now().toEpochMilliseconds() - session.createdAt
                 )
             } else {
                 session

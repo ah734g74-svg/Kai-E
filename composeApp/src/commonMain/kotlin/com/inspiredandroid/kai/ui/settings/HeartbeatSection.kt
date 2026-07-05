@@ -506,7 +506,7 @@ internal fun EmailSection(
 
                 Spacer(Modifier.height(12.dp))
 
-                val nowMs = remember(syncStates) { kotlinx.datetime.Clock.System.now().toEpochMilliseconds() }
+                val nowMs = remember(syncStates) { Clock.System.now().toEpochMilliseconds() }
                 for (account in emailAccounts) {
                     SettingsListItem(
                         title = account.email,
@@ -597,7 +597,7 @@ internal fun SmsSection(
 
                 Spacer(Modifier.height(8.dp))
 
-                val nowMs = remember(syncState) { kotlinx.datetime.Clock.System.now().toEpochMilliseconds() }
+                val nowMs = remember(syncState) { Clock.System.now().toEpochMilliseconds() }
                 val failed = syncState.lastError != null && syncState.lastAttemptEpochMs > 0
                 val timestampMs = if (failed) syncState.lastAttemptEpochMs else syncState.lastSyncEpochMs
                 Row(

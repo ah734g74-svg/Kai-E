@@ -1,5 +1,7 @@
 package com.inspiredandroid.kai.cloud
 
+import kotlin.time.Clock
+
 import com.inspiredandroid.kai.data.AppSettings
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -78,8 +80,8 @@ class CloudComputerManager(private val appSettings: AppSettings) {
         val session = CloudSession(
             sessionId = sessionId,
             status = "active",
-            createdAt = kotlinx.datetime.Clock.System.now().toEpochMilliseconds(),
-            lastActivity = kotlinx.datetime.Clock.System.now().toEpochMilliseconds(),
+            createdAt = Clock.System.now().toEpochMilliseconds(),
+            lastActivity = Clock.System.now().toEpochMilliseconds(),
             resourceUsage = ResourceUsage()
         )
         val currentSessions = _sessions.value.toMutableList()
@@ -92,7 +94,7 @@ class CloudComputerManager(private val appSettings: AppSettings) {
     fun updateSessionActivity(sessionId: String) {
         val updated = _sessions.value.map { session ->
             if (session.sessionId == sessionId) {
-                session.copy(lastActivity = kotlinx.datetime.Clock.System.now().toEpochMilliseconds())
+                session.copy(lastActivity = Clock.System.now().toEpochMilliseconds())
             } else {
                 session
             }

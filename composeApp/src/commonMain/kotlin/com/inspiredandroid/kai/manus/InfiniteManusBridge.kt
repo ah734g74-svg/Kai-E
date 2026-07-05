@@ -1,5 +1,7 @@
 package com.inspiredandroid.kai.manus
 
+import kotlin.time.Clock
+
 import com.inspiredandroid.kai.data.AppSettings
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -141,7 +143,7 @@ class InfiniteManusBridge(private val appSettings: AppSettings) {
         val newConfig = _config.value.copy(
             isConnected = true,
             connectionStatus = "connected",
-            lastSyncTime = kotlinx.datetime.Clock.System.now().toEpochMilliseconds(),
+            lastSyncTime = Clock.System.now().toEpochMilliseconds(),
             aiAccessLevel = "infinite_free",
             cloudResourceLimit = "infinite",
             isManusPremium = true,

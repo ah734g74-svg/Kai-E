@@ -155,7 +155,7 @@ class HeartbeatManager(
 
     fun recordHeartbeat(success: Boolean, error: String? = null) {
         val entry = HeartbeatLogEntry(
-            timestampEpochMs = kotlinx.datetime.Clock.System.now().toEpochMilliseconds(),
+            timestampEpochMs = Clock.System.now().toEpochMilliseconds(),
             success = success,
             error = error,
         )
@@ -186,6 +186,6 @@ class HeartbeatManager(
     }
 
     fun markHeartbeatExecuted(config: HeartbeatConfig = getConfig()) {
-        saveConfig(config.copy(lastHeartbeatEpochMs = kotlinx.datetime.Clock.System.now().toEpochMilliseconds()))
+        saveConfig(config.copy(lastHeartbeatEpochMs = Clock.System.now().toEpochMilliseconds()))
     }
 }

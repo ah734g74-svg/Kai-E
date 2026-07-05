@@ -1,5 +1,7 @@
 package com.inspiredandroid.kai.resources
 
+import kotlin.time.Clock
+
 import com.inspiredandroid.kai.data.AppSettings
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -184,7 +186,7 @@ class InfiniteResourceEngine(private val appSettings: AppSettings) {
         val metrics = _usageMetrics.value
         return if (metrics.isNotEmpty()) {
             ResourceUsageMetrics(
-                timestamp = kotlinx.datetime.Clock.System.now().toEpochMilliseconds(),
+                timestamp = Clock.System.now().toEpochMilliseconds(),
                 cpuUsage = metrics.map { it.cpuUsage }.average().toFloat(),
                 memoryUsage = metrics.map { it.memoryUsage }.average().toFloat(),
                 storageUsage = metrics.map { it.storageUsage }.average().toFloat(),

@@ -30,7 +30,7 @@ class SplinterlandsApi {
 
     @OptIn(ExperimentalTime::class)
     suspend fun login(username: String, postingKeyWif: String): String {
-        val ts = kotlinx.datetime.Clock.System.now().toEpochMilliseconds()
+        val ts = Clock.System.now().toEpochMilliseconds()
         val message = username + ts
         val sig = signMessage(message, postingKeyWif)
 
@@ -73,7 +73,7 @@ class SplinterlandsApi {
                     if (lastRewardTime.isNotBlank()) {
                         try {
                             val lastMs = kotlin.time.Instant.parse(lastRewardTime).toEpochMilliseconds()
-                            val nowMs = kotlinx.datetime.Clock.System.now().toEpochMilliseconds()
+                            val nowMs = Clock.System.now().toEpochMilliseconds()
                             val elapsedSec = (nowMs - lastMs) / 1000.0
                             return (balance + elapsedSec / 3600.0).toInt().coerceAtMost(50)
                         } catch (_: Exception) { /* fall through */ }
@@ -176,5 +176,5 @@ class SplinterlandsApi {
     }
 
     @OptIn(ExperimentalTime::class)
-    private fun currentTimeMs(): Long = kotlinx.datetime.Clock.System.now().toEpochMilliseconds()
+    private fun currentTimeMs(): Long = Clock.System.now().toEpochMilliseconds()
 }

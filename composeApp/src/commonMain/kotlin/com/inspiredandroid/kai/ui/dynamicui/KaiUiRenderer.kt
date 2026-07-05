@@ -989,14 +989,14 @@ private fun RenderCountdown(
     toggleState: SnapshotStateMap<String, Boolean>,
     onCallback: (String, Map<String, String>) -> Unit,
 ) {
-    val targetMs = remember { kotlinx.datetime.Clock.System.now().toEpochMilliseconds() + node.seconds.toLong() * 1000L }
+    val targetMs = remember { Clock.System.now().toEpochMilliseconds() + node.seconds.toLong() * 1000L }
     var remainingSeconds by remember { mutableStateOf<Long>(node.seconds.toLong()) }
     var expired by remember { mutableStateOf(false) }
     val currentOnCallback by rememberUpdatedState(onCallback)
 
     LaunchedEffect(targetMs) {
         while (true) {
-            val diff = (targetMs - kotlinx.datetime.Clock.System.now().toEpochMilliseconds()) / 1000L
+            val diff = (targetMs - Clock.System.now().toEpochMilliseconds()) / 1000L
             remainingSeconds = diff.coerceAtLeast(0L)
             if (diff <= 0L) {
                 if (!expired) {

@@ -565,7 +565,7 @@ class RemoteDataRepository(
                 )
             }
         }
-        val startTime = kotlinx.datetime.Clock.System.now().toEpochMilliseconds()
+        val startTime = Clock.System.now().toEpochMilliseconds()
         // Prefer an explicit coroutine-context conversation id (set by askWithTools
         // for heartbeat / scheduled runs) over the globally active chat id, so those
         // background runs don't leak shell commands into whatever chat is open.
@@ -576,7 +576,7 @@ class RemoteDataRepository(
             if (e is kotlinx.coroutines.CancellationException) throw e
             """{"success": false, "error": "${e.message ?: "Tool execution failed"}"}"""
         }
-        val elapsed = kotlinx.datetime.Clock.System.now().toEpochMilliseconds() - startTime
+        val elapsed = Clock.System.now().toEpochMilliseconds() - startTime
         if (elapsed < MIN_TOOL_DISPLAY_MS) {
             delay(MIN_TOOL_DISPLAY_MS.milliseconds - elapsed.milliseconds)
         }
@@ -1159,7 +1159,7 @@ class RemoteDataRepository(
         // scheduled runs) over the globally active chat id, so background runs don't
         // leak shell commands into the chat the user is currently viewing.
         val conversationIdSnapshot = currentConversationIdOrNull() ?: _currentConversationId.value
-        val startTime = kotlinx.datetime.Clock.System.now().toEpochMilliseconds()
+        val startTime = Clock.System.now().toEpochMilliseconds()
         val results = coroutineScope {
             toolCalls.map { (callId, name, arguments) ->
                 async {
@@ -1168,7 +1168,7 @@ class RemoteDataRepository(
                 }
             }.awaitAll()
         }
-        val elapsed = kotlinx.datetime.Clock.System.now().toEpochMilliseconds() - startTime
+        val elapsed = Clock.System.now().toEpochMilliseconds() - startTime
         if (elapsed < MIN_TOOL_DISPLAY_MS) {
             delay((MIN_TOOL_DISPLAY_MS - elapsed).milliseconds)
         }
@@ -1377,7 +1377,7 @@ class RemoteDataRepository(
         val history = trimToRecentExchanges(chatHistory.value, 20)
         if (history.isEmpty()) return
 
-        val now = kotlinx.datetime.Clock.System.now().toEpochMilliseconds()
+        val now = Clock.System.now().toEpochMilliseconds()
         val conversationId = _currentConversationId.value ?: Uuid.random().toString().also {
             setCurrentConversationId(it)
         }
@@ -2044,7 +2044,7 @@ class RemoteDataRepository(
     }
 
     override suspend fun addAssistantMessage(content: String) {
-        val now = kotlinx.datetime.Clock.System.now().toEpochMilliseconds()
+        val now = Clock.System.now().toEpochMilliseconds()
 
         val existing = savedConversations.value.find { it.type == Conversation.TYPE_HEARTBEAT }
         val heartbeatId = existing?.id ?: getOrCreateHeartbeatConversationId()
@@ -2072,7 +2072,7 @@ class RemoteDataRepository(
     override suspend fun getOrCreateHeartbeatConversationId(): String {
         val existing = savedConversations.value.find { it.type == Conversation.TYPE_HEARTBEAT }
         if (existing != null) return existing.id
-        val now = kotlinx.datetime.Clock.System.now().toEpochMilliseconds()
+        val now = Clock.System.now().toEpochMilliseconds()
         val id = Uuid.random().toString()
         conversationStorage.saveConversation(
             Conversation(

@@ -1,5 +1,7 @@
 package com.inspiredandroid.kai.manus
 
+import kotlin.time.Clock
+
 import com.inspiredandroid.kai.data.AppSettings
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -21,7 +23,7 @@ data class Manus16MaxFeature(
     val isFree: Boolean = true,
     val isInfinite: Boolean = true,
     val version: String = "1.6.0-max",
-    val lastUpdated: Long = kotlinx.datetime.Clock.System.now().toEpochMilliseconds()
+    val lastUpdated: Long = Clock.System.now().toEpochMilliseconds()
 )
 
 @Serializable

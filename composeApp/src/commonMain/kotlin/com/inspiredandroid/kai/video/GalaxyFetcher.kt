@@ -1,5 +1,7 @@
 package com.inspiredandroid.kai.video
 
+import kotlin.time.Clock
+
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.serialization.Serializable
@@ -20,7 +22,7 @@ data class ContentCapture(
     val quality: String = "auto",
     val isPaid: Boolean = false,
     val status: String = "pending", // pending, capturing, captured, processing, completed, failed
-    val captureTime: Long = kotlinx.datetime.Clock.System.now().toEpochMilliseconds(),
+    val captureTime: Long = Clock.System.now().toEpochMilliseconds(),
     val completedTime: Long = 0,
     val fileSize: Long = 0,
     val filePath: String = "",
@@ -143,7 +145,7 @@ class GalaxyFetcher {
         isPaid: Boolean = false
     ): ContentCapture {
         val capture = ContentCapture(
-            id = "capture-${kotlinx.datetime.Clock.System.now().toEpochMilliseconds()}",
+            id = "capture-${Clock.System.now().toEpochMilliseconds()}",
             sourceUrl = sourceUrl,
             platform = platform,
             contentType = "video",
@@ -249,7 +251,7 @@ class GalaxyFetcher {
                 status = "completed",
                 filePath = filePath,
                 fileSize = fileSize,
-                completedTime = kotlinx.datetime.Clock.System.now().toEpochMilliseconds(),
+                completedTime = Clock.System.now().toEpochMilliseconds(),
                 metadata = metadata
             )
             _captures.value = captures
@@ -266,7 +268,7 @@ class GalaxyFetcher {
             captures[index] = capture.copy(
                 status = "failed",
                 errorMessage = errorMessage,
-                completedTime = kotlinx.datetime.Clock.System.now().toEpochMilliseconds()
+                completedTime = Clock.System.now().toEpochMilliseconds()
             )
             _captures.value = captures
         }

@@ -1,5 +1,7 @@
 package com.inspiredandroid.kai.search
 
+import kotlin.time.Clock
+
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.serialization.Serializable
@@ -20,7 +22,7 @@ data class SearchQuery(
     val results: List<SearchResult> = emptyList(),
     val resultCount: Int = 0,
     val searchTime: Long = 0,
-    val startTime: Long = kotlinx.datetime.Clock.System.now().toEpochMilliseconds(),
+    val startTime: Long = Clock.System.now().toEpochMilliseconds(),
     val completedTime: Long = 0,
     val sortBy: String = "relevance" // relevance, date, size, popularity
 )
@@ -120,12 +122,12 @@ class UniversalOmniSearch {
         sortBy: String = "relevance"
     ): SearchQuery {
         val search = SearchQuery(
-            id = "search-${kotlinx.datetime.Clock.System.now().toEpochMilliseconds()}",
+            id = "search-${Clock.System.now().toEpochMilliseconds()}",
             query = query,
             searchScope = searchScope,
             searchType = searchType,
             status = "searching",
-            startTime = kotlinx.datetime.Clock.System.now().toEpochMilliseconds(),
+            startTime = Clock.System.now().toEpochMilliseconds(),
             sortBy = sortBy
         )
         
@@ -190,13 +192,13 @@ class UniversalOmniSearch {
         scope: String = "all"
     ): SearchQuery {
         val search = SearchQuery(
-            id = "search-${kotlinx.datetime.Clock.System.now().toEpochMilliseconds()}",
+            id = "search-${Clock.System.now().toEpochMilliseconds()}",
             query = query,
             searchScope = scope,
             searchType = "text",
             filters = filters,
             status = "searching",
-            startTime = kotlinx.datetime.Clock.System.now().toEpochMilliseconds()
+            startTime = Clock.System.now().toEpochMilliseconds()
         )
         
         addSearch(search)
@@ -218,8 +220,8 @@ class UniversalOmniSearch {
                 status = status,
                 results = results,
                 resultCount = results.size,
-                searchTime = kotlinx.datetime.Clock.System.now().toEpochMilliseconds() - search.startTime,
-                completedTime = if (status == "completed" || status == "failed") kotlinx.datetime.Clock.System.now().toEpochMilliseconds() else 0
+                searchTime = Clock.System.now().toEpochMilliseconds() - search.startTime,
+                completedTime = if (status == "completed" || status == "failed") Clock.System.now().toEpochMilliseconds() else 0
             )
             _searches.value = searches
             

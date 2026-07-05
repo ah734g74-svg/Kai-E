@@ -1,5 +1,7 @@
 package com.inspiredandroid.kai.terminal
 
+import kotlin.time.Clock
+
 import com.inspiredandroid.kai.data.AppSettings
 import com.inspiredandroid.kai.data.SelfEvolutionEngine
 import com.inspiredandroid.kai.data.OmegaExecutionEngine
@@ -111,7 +113,7 @@ class InfiniteTerminalEngine(
         val session = TerminalSession(
             sessionId = sessionId,
             isActive = true,
-            createdAt = kotlinx.datetime.Clock.System.now().toEpochMilliseconds(),
+            createdAt = Clock.System.now().toEpochMilliseconds(),
             isInfinite = true,
             features = listOf(
                 "parallel_execution",
@@ -145,7 +147,7 @@ class InfiniteTerminalEngine(
         
         if (!isSafe) {
             return TerminalOutput(
-                commandId = "cmd-${kotlinx.datetime.Clock.System.now().toEpochMilliseconds()}",
+                commandId = "cmd-${Clock.System.now().toEpochMilliseconds()}",
                 output = "",
                 error = "Command failed safety verification",
                 exitCode = 1,
@@ -155,9 +157,9 @@ class InfiniteTerminalEngine(
 
         // تسجيل الأمر في السجل
         val terminalCommand = TerminalCommand(
-            id = "cmd-${kotlinx.datetime.Clock.System.now().toEpochMilliseconds()}",
+            id = "cmd-${Clock.System.now().toEpochMilliseconds()}",
             command = command,
-            timestamp = kotlinx.datetime.Clock.System.now().toEpochMilliseconds(),
+            timestamp = Clock.System.now().toEpochMilliseconds(),
             priority = priority,
             isParallel = isParallel,
             timeout = 60000L,
@@ -170,9 +172,9 @@ class InfiniteTerminalEngine(
         appSettings.settings.putString(KEY_TERMINAL_HISTORY, json.encodeToString(history))
 
         // تنفيذ الأمر باستخدام محرك Omega
-        val startTime = kotlinx.datetime.Clock.System.now().toEpochMilliseconds()
+        val startTime = Clock.System.now().toEpochMilliseconds()
         val result = omegaExecutionEngine.executeOmega(command)
-        val executionTime = kotlinx.datetime.Clock.System.now().toEpochMilliseconds() - startTime
+        val executionTime = Clock.System.now().toEpochMilliseconds() - startTime
 
         val output = TerminalOutput(
             commandId = terminalCommand.id,
