@@ -24,8 +24,11 @@ import com.inspiredandroid.kai.data.OmegaExecutionEngine
 import com.inspiredandroid.kai.cloud.CloudComputerManager
 import com.inspiredandroid.kai.api.AdvancedApiManager
 import com.inspiredandroid.kai.manus.InfiniteManusBridge
+import com.inspiredandroid.kai.manus.Manus16MaxFeatures
 import com.inspiredandroid.kai.ai.InfiniteAiAccess
 import com.inspiredandroid.kai.cloud.InfiniteCloudComputer
+import com.inspiredandroid.kai.terminal.InfiniteTerminalEngine
+import com.inspiredandroid.kai.access.ZeroLimitAccess
 import com.inspiredandroid.kai.notifications.NotificationReader
 import com.inspiredandroid.kai.skills.SkillManager
 import com.inspiredandroid.kai.sms.SmsPoller
@@ -131,6 +134,15 @@ val appModule = module {
     }
     single<InfiniteCloudComputer> {
         InfiniteCloudComputer(get())
+    }
+    single<Manus16MaxFeatures> {
+        Manus16MaxFeatures(get())
+    }
+    single<ZeroLimitAccess> {
+        ZeroLimitAccess(get())
+    }
+    single<InfiniteTerminalEngine> {
+        InfiniteTerminalEngine(get(), get<SelfEvolutionEngine>(), get<OmegaExecutionEngine>())
     }
     single<SkillManager> {
         SkillManager(get<SandboxController>())
