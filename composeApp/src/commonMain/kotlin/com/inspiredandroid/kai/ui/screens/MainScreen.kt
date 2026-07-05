@@ -409,7 +409,7 @@ fun SecurityCard(
             }
             
             Icon(
-                imageVector = Icons.AutoMirrored.Filled.ChevronRight,
+                imageVector = ChevronRight,
                 contentDescription = "Navigate",
                 tint = color,
                 modifier = Modifier.size(24.dp)
