@@ -234,6 +234,7 @@ object CommonTools {
 
     val commonToolDefinitions = listOf(
         WebSearchTool.toolInfo,
+        YouTubeResearchTool.toolInfo,
         localTimeToolInfo,
         ipLocationToolInfo,
         openUrlToolInfo,
@@ -283,6 +284,12 @@ object CommonTools {
         }
         if (appSettings.isToolEnabled(FetchUrlTool.schema.name)) {
             add(FetchUrlTool)
+        }
+        if (appSettings.isToolEnabled(YouTubeResearchTool.schema.name)) {
+            add(YouTubeResearchTool)
+        }
+        if (appSettings.isToolEnabled(InfiniteSearchEngine.infiniteSearchTool.schema.name)) {
+            add(InfiniteSearchEngine.infiniteSearchTool)
         }
     }
 

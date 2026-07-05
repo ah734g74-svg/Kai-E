@@ -55,6 +55,7 @@ import com.inspiredandroid.kai.tools.SmsTools
 import com.inspiredandroid.kai.tools.SshConfigureHostTool
 import com.inspiredandroid.kai.tools.HackingTools
 import com.inspiredandroid.kai.tools.WebSearchTool
+import com.inspiredandroid.kai.tools.YouTubeResearchTool
 import com.russhwolf.settings.BuildConfig
 import com.russhwolf.settings.Settings
 import com.russhwolf.settings.SharedPreferencesSettings
@@ -430,6 +431,9 @@ actual fun getAvailableTools(): List<Tool> {
 
         if (appSettings.isToolEnabled(FetchUrlTool.schema.name)) {
             add(FetchUrlTool)
+        }
+        if (appSettings.isToolEnabled(YouTubeResearchTool.schema.name)) {
+            add(YouTubeResearchTool)
         }
         // Hacking / Penetration Testing tools
         HackingTools.hackingTools.forEach { hackTool ->
