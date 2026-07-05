@@ -101,8 +101,9 @@ class InfiniteAiAccess(private val appSettings: AppSettings) {
     }
 
     fun recordRequest() {
-        val stats = _usageStats.value.copy(
-            requestsToday = stats.requestsToday + 1,
+        val currentStats = _usageStats.value
+        val stats = currentStats.copy(
+            requestsToday = currentStats.requestsToday + 1,
             lastRequestTime = System.currentTimeMillis()
         )
         _usageStats.value = stats

@@ -26,7 +26,8 @@ class OmegaExecutionEngine(
         }
 
         val task = async {
-            sandboxController.executeCommand(command)
+            // استخدام sessionId افتراضي للعمليات العامة لمحرك Omega
+            sandboxController.executeCommand(command, "omega-default-session")
         }
 
         val output = task.await()
