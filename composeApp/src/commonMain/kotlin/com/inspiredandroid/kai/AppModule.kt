@@ -18,6 +18,9 @@ import com.inspiredandroid.kai.email.EmailPoller
 import com.inspiredandroid.kai.inference.createLocalInferenceEngine
 import com.inspiredandroid.kai.mcp.McpServerManager
 import com.inspiredandroid.kai.network.Requests
+import com.inspiredandroid.kai.connectors.ConnectorManager
+import com.inspiredandroid.kai.data.SelfEvolutionEngine
+import com.inspiredandroid.kai.data.OmegaExecutionEngine
 import com.inspiredandroid.kai.notifications.NotificationReader
 import com.inspiredandroid.kai.skills.SkillManager
 import com.inspiredandroid.kai.sms.SmsPoller
@@ -100,6 +103,15 @@ val appModule = module {
     single<McpServerManager> {
         McpServerManager(get())
     }
+    single<ConnectorManager> {
+        ConnectorManager(get())
+    }
+    single<SelfEvolutionEngine> {
+        SelfEvolutionEngine(get())
+    }
+    single<OmegaExecutionEngine> {
+        OmegaExecutionEngine(get(), get())
+    }
     single<SkillManager> {
         SkillManager(get<SandboxController>())
     }
@@ -154,5 +166,5 @@ val appModule = module {
     viewModel { SandboxPackagesViewModel(get<SandboxController>()) }
     viewModel { SandboxSessionViewModel(get<SandboxController>(), get<DataRepository>()) }
     viewModel { SplinterlandsViewModel(get<DataRepository>(), get(), get(), get<SplinterlandsApi>()) }
-    viewModel { ChatViewModel(get<DataRepository>(), get<TaskScheduler>()) }
+    viewModel { ChatViewModel(get<DataRepository>(), get<TaskScheduler>(), get<SelfEvolutionEngine>()) }
 }

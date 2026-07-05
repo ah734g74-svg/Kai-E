@@ -10,6 +10,7 @@ import com.inspiredandroid.kai.data.ServiceEntry
 import com.inspiredandroid.kai.data.TaskScheduler
 import com.inspiredandroid.kai.data.UiSubmission
 import com.inspiredandroid.kai.getBackgroundDispatcher
+import com.inspiredandroid.kai.data.SelfEvolutionEngine
 import com.inspiredandroid.kai.network.toUiError
 import com.inspiredandroid.kai.ui.markdown.KaiUiBlock
 import com.inspiredandroid.kai.ui.markdown.KaiUiError
@@ -42,6 +43,7 @@ import kotlin.time.Duration.Companion.seconds
 class ChatViewModel(
     private val dataRepository: DataRepository,
     private val taskScheduler: TaskScheduler,
+    private val selfEvolutionEngine: SelfEvolutionEngine,
     private val backgroundDispatcher: CoroutineContext = getBackgroundDispatcher(),
 ) : ViewModel() {
 
@@ -195,6 +197,13 @@ class ChatViewModel(
                 )
             }
             try {
+                // Manus 1.6 Max: التحقق من الكود والمدخلات باستخدام محرك التطور الذاتي
+                if (strippedQuestion != null) {
+                    selfEvolutionEngine.verifyAndMonitor(strippedQuestion) { progress ->
+                        // يمكن تحديث واجهة المستخدم بحالة التدقيق هنا
+                    }
+                }
+                
                 dataRepository.ask(strippedQuestion, files, uiSubmission, activeSkillId)
 
                 // Auto-retry in interactive mode if the response has no valid kai-ui
