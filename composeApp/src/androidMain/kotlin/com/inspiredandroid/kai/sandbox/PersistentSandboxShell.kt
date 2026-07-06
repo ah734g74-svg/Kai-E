@@ -69,7 +69,20 @@ class PersistentSandboxShell(
         onStdout: ((String) -> Unit)? = null,
         onStderr: ((String) -> Unit)? = null,
     ): Map<String, Any> = mutex.withLock {
-        ensureShell()
+        try {
+            ensureShell()
+        } catch (e: Exception) {
+            // Runtime.exec() inside ensureShell() can throw (ABI mismatch,
+            // exec permission denied by SELinux/W^X, missing binary...).
+            // Previously this propagated uncaught out of run() and crashed
+            // the whole app the moment a shell was first needed (e.g. on
+            // opening the Linux tab or the package manager). Surface it as
+            // a normal failed-command result instead.
+            android.util.Log.e("PersistentSandboxShell", "ensureShell failed: ${e.message}", e)
+            return@withLock errorMap(
+                stderr = "Failed to start sandbox shell: ${e.message ?: e::class.simpleName}",
+            )
+        }
         val nonce = randomNonce()
         val sink = CommandSink(nonce = nonce, onStdout = onStdout, onStderr = onStderr)
         currentSink.set(sink)

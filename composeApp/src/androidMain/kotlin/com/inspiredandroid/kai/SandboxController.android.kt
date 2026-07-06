@@ -154,7 +154,19 @@ class AndroidSandboxController : SandboxController {
         val state = sandboxManager.state.value
         if (state !is SandboxState.Ready) return@withContext SANDBOX_NOT_READY
 
-        val result = sandboxManager.shellFor(sessionId).run(command, timeoutSeconds = 30)
+        // Defense-in-depth: shellFor()/run() are expected to convert internal
+        // failures into a result map (see PersistentSandboxShell.run()), but
+        // this call site is invoked directly from ViewModel coroutines
+        // (SandboxPackagesViewModel, OmegaExecutionEngine) with no
+        // CoroutineExceptionHandler. Any exception that slips through here
+        // used to crash the whole app instantly instead of surfacing as a
+        // normal command error — catch it as a last resort.
+        val result = try {
+            sandboxManager.shellFor(sessionId).run(command, timeoutSeconds = 30)
+        } catch (e: Exception) {
+            android.util.Log.e("SandboxController", "executeCommand failed: ${e.message}", e)
+            return@withContext "Sandbox command failed: ${e.message ?: e::class.simpleName}"
+        }
 
         val stdout = result["stdout"] as? String ?: ""
         val stderr = result["stderr"] as? String ?: ""

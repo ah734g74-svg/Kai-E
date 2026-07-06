@@ -136,4 +136,9 @@
     <string name="tool_promote_learning_description">ترقية تعلم معزز إلى موجه النظام</string>
     <string name="tool_promote_learning_name">ترقية التعلم</string>
     <string name="tool_web_search_description">البحث في الويب عن معلومات حالية</string>
+    <string name="terminal_title">الطرفية</string>
+    <string name="terminal_help_text">يستخدم الذكاء الاصطناعي هذه البيئة لتنفيذ الأوامر.\nيمكنك أيضًا تنفيذ الأوامر يدويًا أدناه.</string>
+    <string name="terminal_input_placeholder">أدخل أمرًا…</string>
+    <string name="terminal_run_content_description">تشغيل</string>
+    <string name="terminal_stop_content_description">إيقاف</string>
 </resources>

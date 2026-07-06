@@ -88,7 +88,15 @@ class SandboxPackagesViewModel(
 
     private suspend fun loadInstalled(): List<PackageEntry> {
         val cmd = "apk info -v | sort"
-        val output = sandboxController.executeCommand(cmd, SandboxSessions.SYSTEM)
+        val output = try {
+            sandboxController.executeCommand(cmd, SandboxSessions.SYSTEM)
+        } catch (e: Exception) {
+            // Last-resort guard: opening the package manager should never be
+            // able to take the whole app down, even if some future change
+            // reintroduces an unguarded throw upstream.
+            log("loadInstalled", cmd, "error: ${e.message}")
+            return emptyList()
+        }
         log("loadInstalled", cmd, output)
         return parseInfoLines(output)
     }
@@ -118,7 +126,13 @@ class SandboxPackagesViewModel(
 
     private suspend fun runSearch(query: String) {
         val cmd = "apk search -v ${shellQuote(query)} | head -n $SEARCH_RESULT_LIMIT"
-        val output = sandboxController.executeCommand(cmd, SandboxSessions.SYSTEM)
+        val output = try {
+            sandboxController.executeCommand(cmd, SandboxSessions.SYSTEM)
+        } catch (e: Exception) {
+            log("runSearch($query)", cmd, "error: ${e.message}")
+            _state.update { it.copy(searching = false) }
+            return
+        }
         log("runSearch($query)", cmd, output)
         val results = parseSearchLines(output).toImmutableList()
         _state.update {

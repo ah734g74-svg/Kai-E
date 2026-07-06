@@ -13,12 +13,18 @@ import kotlin.io.encoding.ExperimentalEncodingApi
  */
 private val imapExistsRegex = Regex("\\* (\\d+) EXISTS")
 private val imapTaggedResponseRegex = Regex("^A\\d+ (OK|NO|BAD) .*")
+private val fetchBlockStartRegex = Regex("^\\* (\\d+) FETCH \\(")
 private val mimeBoundaryRegex = Regex("^--([\\w'()+,-./:=? ]+)\\s*$", RegexOption.MULTILINE)
 private val transferEncodingRegex = Regex("content-transfer-encoding:\\s*([\\w-]+)", RegexOption.IGNORE_CASE)
 private val scriptRegex = Regex("(?is)<script[^>]*>.*?</script>")
 private val styleRegex = Regex("(?is)<style[^>]*>.*?</style>")
 private val htmlTagRegex = Regex("<[^>]+>")
 private val whitespaceRegex = Regex("\\s+")
+
+// How many messages to request per FETCH command. Keeps the command line a
+// reasonable length while still collapsing what used to be one network
+// round-trip per message into a small, fixed number of round-trips.
+private const val FETCH_BATCH_SIZE = 25
 
 class ImapClient(
     private val host: String,
@@ -75,20 +81,55 @@ class ImapClient(
 
     /**
      * Fetch email headers (From, Subject, Date, Message-ID) and a text preview.
+     *
+     * Batches sequence numbers into a small number of IMAP FETCH commands
+     * (e.g. "FETCH 3,7,9,...  (...)") instead of one round-trip per message.
+     * With up to 50 messages this previously meant 50 sequential network
+     * round-trips — each paying the full latency of the connection — which
+     * is the dominant cost of "email search" on anything but a very fast,
+     * low-latency link. Batching collapses that to ~2 round-trips.
      */
     suspend fun fetchHeaders(uids: List<Long>, accountId: String): List<EmailMessage> {
         if (uids.isEmpty()) return emptyList()
-        val conn = connection ?: throw IllegalStateException("Not connected")
+        val limited = uids.take(50) // Limit to 50 emails per fetch
         val messages = mutableListOf<EmailMessage>()
 
-        for (uid in uids.take(50)) { // Limit to 50 emails per fetch
-            val tag = nextTag()
-            conn.writeLine("$tag FETCH $uid (BODY.PEEK[HEADER.FIELDS (FROM SUBJECT DATE MESSAGE-ID)] BODY.PEEK[TEXT]<0.200> FLAGS)")
-            val response = readUntilTaggedOrGreeting(tag)
-            val msg = parseEmailFromFetch(uid, accountId, response)
-            if (msg != null) messages.add(msg)
+        for (batch in limited.chunked(FETCH_BATCH_SIZE)) {
+            messages += fetchHeadersBatch(batch, accountId)
         }
         return messages
+    }
+
+    private suspend fun fetchHeadersBatch(seqNumbers: List<Long>, accountId: String): List<EmailMessage> {
+        val conn = connection ?: throw IllegalStateException("Not connected")
+        val tag = nextTag()
+        val set = seqNumbers.joinToString(",")
+        conn.writeLine("$tag FETCH $set (BODY.PEEK[HEADER.FIELDS (FROM SUBJECT DATE MESSAGE-ID)] BODY.PEEK[TEXT]<0.200> FLAGS)")
+        val response = readUntilTaggedOrGreeting(tag)
+        return splitFetchResponses(response).mapNotNull { (seq, block) ->
+            parseEmailFromFetch(seq, accountId, block)
+        }
+    }
+
+    /**
+     * Split a raw multi-message FETCH response into (sequenceNumber, block) pairs.
+     * Each message starts at a line matching "* <n> FETCH (" — everything up to
+     * (but not including) the next such line, or the tagged completion line,
+     * belongs to that message.
+     */
+    private fun splitFetchResponses(raw: String): List<Pair<Long, String>> {
+        val lines = raw.lines()
+        val blocks = mutableListOf<Pair<Long, MutableList<String>>>()
+        for (line in lines) {
+            val match = fetchBlockStartRegex.find(line)
+            if (match != null) {
+                val seq = match.groupValues[1].toLongOrNull() ?: continue
+                blocks += seq to mutableListOf(line)
+            } else if (blocks.isNotEmpty()) {
+                blocks.last().second += line
+            }
+        }
+        return blocks.map { (seq, blockLines) -> seq to blockLines.joinToString("\n") }
     }
 
     /**
@@ -127,7 +168,12 @@ class ImapClient(
         val conn = connection ?: throw IllegalStateException("Not connected")
         val result = StringBuilder()
         var lineCount = 0
-        val maxLines = 500 // Safety limit
+        // Safety limit. Was 500, sized for a single-message FETCH. Batched
+        // FETCH (FETCH_BATCH_SIZE messages per command) can legitimately
+        // produce far more lines (headers + text preview + FLAGS per
+        // message), so this needs enough headroom for a full batch without
+        // truncating mid-response and losing the tagged completion line.
+        val maxLines = 6000
 
         while (lineCount < maxLines) {
             val line = conn.readLine()
