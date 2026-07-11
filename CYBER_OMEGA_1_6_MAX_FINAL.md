@@ -1,5 +1,5 @@
 # 🚀 Cyber-Omega 1.6 Max - النسخة النهائية الخارقة
-## Kai-E Ultimate Edition - Complete Manus 1.6 Max Integration
+## DarkForge-X Ultimate Edition - Complete Manus 1.6 Max Integration
 
 ---
 
@@ -121,7 +121,7 @@
 ### المكونات الرئيسية:
 
 ```
-Kai-E (Cyber-Omega 1.6 Max)
+DarkForge-X (Cyber-Omega 1.6 Max)
 │
 ├── Security Layer
 │   ├── CyberOmegaSecurity
@@ -172,7 +172,7 @@ Kai-E (Cyber-Omega 1.6 Max)
 ## 📁 هيكل الملفات
 
 ```
-Kai-E/
+DarkForge-X/
 ├── composeApp/src/commonMain/kotlin/com/inspiredandroid/kai/
 │   ├── security/
 │   │   └── CyberOmegaSecurity.kt

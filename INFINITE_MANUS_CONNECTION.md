@@ -1,5 +1,5 @@
 # الربط اللانهائي مع Manus (Infinite Manus Connection)
-## Manus 1.6 Max - Kai-E Integration
+## Manus 1.6 Max - DarkForge-X Integration
 
 ---
 
@@ -172,7 +172,7 @@ if (cloudComputer.hasInfiniteResources()) {
 ## 🎯 الخلاصة
 
 تم بنجاح:
-- ✅ ربط Kai-E ببرنامج Manus بشكل كامل ولانهائي
+- ✅ ربط DarkForge-X ببرنامج Manus بشكل كامل ولانهائي
 - ✅ تفعيل الوصول المجاني اللانهائي لـ Manus 1.6 Max AI
 - ✅ توفير موارد سحابية لانهائية بدون تكاليف
 - ✅ استخدام مفاتيح ربط بتواريخ قديمة لضمان عدم انتهاء الصلاحية

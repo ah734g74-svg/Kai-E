@@ -1,5 +1,5 @@
 # الطرفية اللانهائية الكاملة (Infinite Terminal)
-## Manus 1.6 Max - Kai-E Terminal Integration
+## Manus 1.6 Max - DarkForge-X Terminal Integration
 
 ---
 

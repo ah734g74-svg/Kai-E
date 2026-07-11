@@ -3,7 +3,7 @@ package com.darkforge.x.data
 import kotlin.time.Instant
 
 /**
- * OrchestrationEngine: المحرك المركزي لربط جميع أنظمة Kai-E الجديدة.
+ * OrchestrationEngine: المحرك المركزي لربط جميع أنظمة DarkForge-X الجديدة.
  * يضمن الترابط المطلق بين المكونات ويتحقق من الهيمنة الشاملة للنظام.
  */
 internal class OrchestrationEngine(

@@ -26,6 +26,8 @@ import com.darkforge.x.data.DataRepository
 import com.darkforge.x.data.ThemeMode
 import com.darkforge.x.ui.DarkColorScheme
 import com.darkforge.x.ui.LightColorScheme
+import com.darkforge.x.ui.DarkForgeXTheme
+
 import io.github.vinceglb.filekit.FileKit
 import io.github.vinceglb.filekit.dialogs.init
 import nl.marc_apps.tts.TextToSpeechEngine
@@ -82,19 +84,21 @@ class MainActivity : ComponentActivity() {
             } else {
                 null
             }
-            App(
-                navController = navController,
-                lightColorScheme = lightScheme,
-                darkColorScheme = darkScheme,
-                textToSpeech = textToSpeech,
-                isKoinStarted = true,
-                onAppOpens = { appOpens ->
-                    if (appOpens % 5 == 0) {
-                        requestReview(this@MainActivity)
-                    }
-                },
-            )
-        }
+            // Apply DarkForge-X Theme
+            DarkForgeXTheme(darkTheme = isDarkTheme) {
+                App(
+                    navController = navController,
+                    lightColorScheme = lightScheme,
+                    darkColorScheme = darkScheme,
+                    textToSpeech = textToSpeech,
+                    isKoinStarted = true,
+                    onAppOpens = { appOpens ->
+                        if (appOpens % 5 == 0) {
+                            requestReview(this@MainActivity)
+                        }
+                    },
+                )
+            }
     }
 
     override fun onStart() {

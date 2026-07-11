@@ -5,7 +5,7 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.encodeToString
 
 /**
- * HyperAdaptiveIntelligence — العقل المدبر لنظام Kai-Ezz بمستوى Manus 1.6 Max.
+ * HyperAdaptiveIntelligence — العقل المدبر لنظام DarkForge-X بمستوى Manus 1.6 Max.
  * يقوم هذا النظام بتحليل البيانات، التعلم التلقائي، وتطوير استراتيجيات خارقة
  * لضمان جلب بيانات وبحث "لانهاية لهما" في السرعة والقوة.
  */

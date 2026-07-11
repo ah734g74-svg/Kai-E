@@ -1,7 +1,7 @@
 package com.darkforge.x.finetuning
 
-import com.darkforge.x.ui.markdown.KaiUiBlock
-import com.darkforge.x.ui.markdown.KaiUiError
+import com.darkforge.x.ui.markdown.DarkForgeXUiBlock
+import com.darkforge.x.ui.markdown.DarkForgeXUiError
 import com.darkforge.x.ui.markdown.parseMarkdown
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
@@ -208,8 +208,8 @@ class GenerateTrainingData {
 
             val raw = file.readText()
             val blocks = parseMarkdown(raw).blocks
-            val hasUi = blocks.any { it is KaiUiBlock }
-            val hasError = blocks.any { it is KaiUiError }
+            val hasUi = blocks.any { it is DarkForgeXUiBlock }
+            val hasError = blocks.any { it is DarkForgeXUiError }
 
             // Only include clean successes
             if (hasUi && !hasError) {
@@ -239,8 +239,8 @@ class GenerateTrainingData {
      */
     private fun validateKaiUi(response: String): Boolean {
         val blocks = parseMarkdown(response).blocks
-        val hasUi = blocks.any { it is KaiUiBlock }
-        val hasError = blocks.any { it is KaiUiError }
+        val hasUi = blocks.any { it is DarkForgeXUiBlock }
+        val hasError = blocks.any { it is DarkForgeXUiError }
         // Allow responses that don't contain kai-ui at all (mixed markdown-only for dynamic mode)
         if (!hasUi && !hasError) return false
         return hasUi && !hasError
@@ -253,24 +253,24 @@ class GenerateTrainingData {
     private enum class Mode { DYNAMIC_UI, INTERACTIVE }
 
     /**
-     * Builds the kai-ui system prompt. Mirrors [KaiUiValidationTest.buildSystemPrompt].
+     * Builds the darkforge-x-ui system prompt. Mirrors [DarkForgeXUiValidationTest.buildSystemPrompt].
      */
     private fun buildSystemPrompt(mode: Mode): String = buildString {
         val dynamicUiOnly = mode == Mode.DYNAMIC_UI
         if (dynamicUiOnly) {
             append("\n## Dynamic UI\n")
-            append("You can enhance your chat responses with interactive UI elements using kai-ui blocks. ")
+            append("You can enhance your chat responses with interactive UI elements using darkforge-x-ui blocks. ")
             append("Proactively use them whenever you need input from the user — don't just ask in plain text if a form, selector, or buttons would be more natural. ")
             append("For example, if the user asks you to help plan a trip, present destination options as buttons; if you need preferences, show a form; if presenting choices, use interactive cards. ")
-            append("Use kai-ui whenever collecting data, offering choices, presenting structured information, or guiding multi-step workflows. ")
-            append("You can mix kai-ui blocks with regular markdown text naturally — use markdown for explanations and kai-ui for interactive elements.\n\n")
+            append("Use darkforge-x-ui whenever collecting data, offering choices, presenting structured information, or guiding multi-step workflows. ")
+            append("You can mix darkforge-x-ui blocks with regular markdown text naturally — use markdown for explanations and darkforge-x-ui for interactive elements.\n\n")
         } else {
             append("\n## Interactive UI Mode (ACTIVE)\n")
             append("You are in full-screen interactive UI mode. The user ONLY sees rendered kai-ui components — they cannot see markdown, plain text, or anything outside a kai-ui fence.\n")
-            append("Your ENTIRE response must be a single ```kai-ui code fence. No text before it, no text after it, no markdown. If you write anything outside the fence, the user will NOT see it.\n\n")
+            append("Your ENTIRE response must be a single ```darkforge-x-ui code fence. No text before it, no text after it, no markdown. If you write anything outside the fence, the user will NOT see it.\n\n")
         }
 
-        append("Format: wrap a JSON object in ```kai-ui fences.\n\n")
+        append("Format: wrap a JSON object in ```darkforge-x-ui fences.")
         append("Components: column, row, card, box, text, button, text_input, checkbox, switch, select, radio_group, slider, chip_group, table, list, divider, image, icon, code, progress, countdown, alert, tabs, accordion, quote, badge, stat, avatar.\n")
         append("- text: {\"type\":\"text\",\"value\":\"...\",\"style\":\"headline|title|body|caption\",\"bold\":true,\"color\":\"primary|secondary|error\"} — do NOT use markdown formatting (**, *, #, etc.) in text values; use the bold/italic/style properties instead\n")
         append("- button: {\"type\":\"button\",\"label\":\"...\",\"action\":{...},\"variant\":\"filled|outlined|text|tonal\"}\n")

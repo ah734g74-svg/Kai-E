@@ -7,7 +7,7 @@ import com.darkforge.x.network.tools.ToolSchema
 
 /**
  * AdvancedHackingTools — مجموعة أدوات اختراق متقدمة تغطي مجالات OSINT، الاستغلال، وما بعد الاستغلال.
- * هذه الأدوات مصممة لتوسيع قدرات Kai-Ezz في مهام الأمن السيبراني المعقدة.
+ * هذه الأدوات مصممة لتوسيع قدرات DarkForge-X في مهام الأمن السيبراني المعقدة.
  *
  * تشمل الأدوات:
  * OSINT: Shodan, theHarvester, Recon-ng, Sublist3r, Amass

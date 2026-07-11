@@ -1,16 +1,61 @@
 package com.darkforge.x.ui.screens
 
+
+
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+
+
+
+
+
+
+import androidx.compose.material3.Icon
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+
+
+
+
+
+
+
+
+import com.darkforge.x.ui.neonCyan
+import com.darkforge.x.ui.electricViolet
+import com.darkforge.x.ui.obsidianBlack
+import com.darkforge.x.ui.darkCharcoal
+import com.darkforge.x.ui.cyberGray
+import com.darkforge.x.ui.DarkForgeXHeader
+import com.darkforge.x.ui.DarkForgeXCard
+import com.darkforge.x.ui.DarkForgeXPrimaryButton
+import com.darkforge.x.ui.DarkForgeXSecondaryButton
+import com.darkforge.x.ui.DarkForgeXStatusBadge
+import com.darkforge.x.ui.StatusType
+import com.darkforge.x.ui.DarkForgeXStyleGuide
+import com.darkforge.x.ui.DarkForgeXCornerRadius
+import com.darkforge.x.ui.DarkForgeXSpacing
+import com.darkforge.x.ui.DarkForgeXTypography
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.*
-import androidx.compose.material.icons.filled.*
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -19,12 +64,30 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.darkforge.x.ui.theme.CyberOmegaColors
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.ChevronRight
+import androidx.compose.material.icons.filled.CloudDownload
+import androidx.compose.material.icons.filled.Compress
+import androidx.compose.material.icons.filled.Download
+import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Folder
+import androidx.compose.material.icons.filled.FolderOpen
+import androidx.compose.material.icons.filled.Language
+import androidx.compose.material.icons.filled.Public
+import androidx.compose.material.icons.filled.Radar
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Security
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.Storage
+import androidx.compose.material.icons.filled.Tune
+import androidx.compose.material.icons.filled.VideoLibrary
 
 /**
- * MainScreen — الشاشة الرئيسية لـ Kai-E
- * واجهة Cyber-Omega Dark الأمامية المتطورة
- * Manus 1.6 Max Level - Premium Main UI
+ * MainScreen — الشاشة الرئيسية لـ DarkForge-X
+ * واجهة DarkForge-X الأمامية المتطورة
+ * The Ultimate Source - Premium Main UI
  */
 
 @Composable
@@ -34,7 +97,7 @@ fun MainScreen() {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(CyberOmegaColors.BackgroundDark)
+            .background(obsidianBlack)
     ) {
         Column(
             modifier = Modifier
@@ -42,8 +105,7 @@ fun MainScreen() {
                 .verticalScroll(rememberScrollState())
                 .padding(bottom = 80.dp)
         ) {
-            // رأس الصفحة
-            HeaderSection()
+            DarkForgeXHeader(title = "DarkForge-X")
             
             Spacer(modifier = Modifier.height(24.dp))
             
@@ -68,73 +130,7 @@ fun MainScreen() {
 }
 
 @Composable
-fun HeaderSection() {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(
-                brush = Brush.verticalGradient(
-                    colors = listOf(
-                        CyberOmegaColors.SurfaceDark,
-                        CyberOmegaColors.BackgroundDark
-                    )
-                )
-            )
-            .padding(24.dp)
-    ) {
-        // الشعار والعنوان
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            // أيقونة الشعار
-            Box(
-                modifier = Modifier
-                    .size(48.dp)
-                    .background(
-                        brush = Brush.linearGradient(
-                            colors = listOf(
-                                CyberOmegaColors.PrimaryDark,
-                                CyberOmegaColors.AccentMagenta
-                            )
-                        ),
-                        shape = RoundedCornerShape(12.dp)
-                    ),
-                contentAlignment = Alignment.Center
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Settings,
-                    contentDescription = "Kai-E Logo",
-                    tint = CyberOmegaColors.BackgroundDark,
-                    modifier = Modifier.size(28.dp)
-                )
-            }
-            
-            Spacer(modifier = Modifier.width(16.dp))
-            
-            Column {
-                Text(
-                    text = "Kai-E",
-                    fontSize = 28.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = CyberOmegaColors.PrimaryDark,
-                    letterSpacing = 2.sp
-                )
-                Text(
-                    text = "Cyber-Omega 1.6 Max",
-                    fontSize = 12.sp,
-                    color = CyberOmegaColors.TextSecondary,
-                    letterSpacing = 1.sp
-                )
-            }
-        }
-        
-        Spacer(modifier = Modifier.height(16.dp))
-        
-        // شريط البحث السريع
-        SearchBar()
-    }
-}
+
 
 @Composable
 fun SearchBar() {
@@ -144,37 +140,37 @@ fun SearchBar() {
         modifier = Modifier
             .fillMaxWidth()
             .height(56.dp),
-        placeholder = {
-            Text(
-                "ابحث في أي مكان...",
-                color = CyberOmegaColors.TextTertiary,
-                fontSize = 14.sp
+            placeholder = {
+                Text(
+                    "ابحث في أي مكان...",
+                    color = cyberGray,
+                    fontSize = DarkForgeXTypography.bodyMedium.fontSize
+                )
+            },
+            leadingIcon = {
+                Icon(
+                    imageVector = Icons.Default.Search,
+                    contentDescription = "Search",
+                    tint = neonCyan
+                )
+            },
+            trailingIcon = {
+                Icon(
+                    imageVector = Icons.Default.Tune,
+                    contentDescription = "Filter",
+                    tint = electricViolet,
+                    modifier = Modifier.clickable { }
+                )
+            },
+            shape = RoundedCornerShape(DarkForgeXCornerRadius.md),
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = neonCyan,
+                unfocusedBorderColor = darkCharcoal,
+                focusedTextColor = Color.White,
+                unfocusedTextColor = cyberGray,
+                focusedContainerColor = darkCharcoal,
+                unfocusedContainerColor = darkCharcoal
             )
-        },
-        leadingIcon = {
-            Icon(
-                imageVector = Icons.Default.Search,
-                contentDescription = "Search",
-                tint = CyberOmegaColors.PrimaryDark
-            )
-        },
-        trailingIcon = {
-            Icon(
-                imageVector = Icons.Default.Tune,
-                contentDescription = "Filter",
-                tint = CyberOmegaColors.AccentCyan,
-                modifier = Modifier.clickable { }
-            )
-        },
-        shape = RoundedCornerShape(12.dp),
-        colors = OutlinedTextFieldDefaults.colors(
-            focusedBorderColor = CyberOmegaColors.PrimaryDark,
-            unfocusedBorderColor = CyberOmegaColors.BorderColor,
-            focusedTextColor = CyberOmegaColors.TextPrimary,
-            unfocusedTextColor = CyberOmegaColors.TextSecondary,
-            focusedContainerColor = CyberOmegaColors.SurfaceLight,
-            unfocusedContainerColor = CyberOmegaColors.SurfaceLight
-        )
     )
 }
 
@@ -189,8 +185,8 @@ fun SecurityDashboard() {
             text = "جناح الأمن السيبراني",
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold,
-            color = CyberOmegaColors.TextPrimary,
-            modifier = Modifier.padding(bottom = 16.dp)
+            color = neonCyan,
+            modifier = Modifier.padding(bottom = DarkForgeXSpacing.lg)
         )
         
         // بطاقات الأمان
@@ -198,7 +194,7 @@ fun SecurityDashboard() {
             title = "محلل الويب الشامل",
             description = "تحليل وعرض كود أي موقع",
             icon = Icons.Default.Language,
-            color = CyberOmegaColors.AccentCyan
+            color = neonCyan
         )
         
         Spacer(modifier = Modifier.height(12.dp))
@@ -207,7 +203,7 @@ fun SecurityDashboard() {
             title = "نظام التدقيق المطلق",
             description = "تدقيق الأكواد وضمان صحتها 100%",
             icon = Icons.Default.CheckCircle,
-            color = CyberOmegaColors.AccentGreen
+            color = Color(0xFF00FF00) // Green
         )
         
         Spacer(modifier = Modifier.height(12.dp))
@@ -216,7 +212,7 @@ fun SecurityDashboard() {
             title = "فحص الثغرات الدفاعي",
             description = "فحص وتأمين الأنظمة ضد الثغرات",
             icon = Icons.Default.Security,
-            color = CyberOmegaColors.AccentMagenta
+            color = electricViolet
         )
     }
 }
@@ -232,8 +228,8 @@ fun SearchDashboard() {
             text = "محرك البحث الشامل",
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold,
-            color = CyberOmegaColors.TextPrimary,
-            modifier = Modifier.padding(bottom = 16.dp)
+            color = neonCyan,
+            modifier = Modifier.padding(bottom = DarkForgeXSpacing.lg)
         )
         
         // بطاقات البحث
@@ -241,7 +237,7 @@ fun SearchDashboard() {
             title = "البحث في الويب",
             description = "البحث السطحي والعميق",
             icon = Icons.Default.Public,
-            color = CyberOmegaColors.AccentCyan
+            color = neonCyan
         )
         
         Spacer(modifier = Modifier.height(12.dp))
@@ -250,7 +246,7 @@ fun SearchDashboard() {
             title = "البحث في قواعد البيانات",
             description = "البحث في الأرشيفات العميقة",
             icon = Icons.Default.Storage,
-            color = CyberOmegaColors.AccentGreen
+            color = Color(0xFF00FF00) // Green
         )
         
         Spacer(modifier = Modifier.height(12.dp))
@@ -259,7 +255,7 @@ fun SearchDashboard() {
             title = "البحث المتقدم",
             description = "بحث متوازي في عدة أماكن",
             icon = Icons.Default.Radar,
-            color = CyberOmegaColors.AccentPurple
+            color = electricViolet
         )
     }
 }
@@ -275,8 +271,8 @@ fun VideoDashboard() {
             text = "مركز الفيديو",
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold,
-            color = CyberOmegaColors.TextPrimary,
-            modifier = Modifier.padding(bottom = 16.dp)
+            color = neonCyan,
+            modifier = Modifier.padding(bottom = DarkForgeXSpacing.lg)
         )
         
         // بطاقات الفيديو
@@ -284,7 +280,7 @@ fun VideoDashboard() {
             title = "تنزيل الفيديوهات",
             description = "سرعة تنزيل خرافية",
             icon = Icons.Default.Download,
-            color = CyberOmegaColors.AccentCyan
+            color = neonCyan
         )
         
         Spacer(modifier = Modifier.height(12.dp))
@@ -293,7 +289,7 @@ fun VideoDashboard() {
             title = "ضغط الفيديو",
             description = "ضغط إلى 140p بالقوة الغاشمة",
             icon = Icons.Default.Compress,
-            color = CyberOmegaColors.AccentMagenta
+            color = electricViolet
         )
         
         Spacer(modifier = Modifier.height(12.dp))
@@ -302,7 +298,7 @@ fun VideoDashboard() {
             title = "جالب المجرّة",
             description = "التقاط من أي منصة",
             icon = Icons.Default.CloudDownload,
-            color = CyberOmegaColors.AccentGreen
+            color = Color(0xFF00FF00) // Green
         )
     }
 }
@@ -318,8 +314,8 @@ fun FileManagerDashboard() {
             text = "مدير الملفات",
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold,
-            color = CyberOmegaColors.TextPrimary,
-            modifier = Modifier.padding(bottom = 16.dp)
+            color = neonCyan,
+            modifier = Modifier.padding(bottom = DarkForgeXSpacing.lg)
         )
         
         // بطاقات الملفات
@@ -327,7 +323,7 @@ fun FileManagerDashboard() {
             title = "إدارة الملفات",
             description = "وصول مطلق للملفات",
             icon = Icons.Default.FolderOpen,
-            color = CyberOmegaColors.AccentCyan
+            color = neonCyan
         )
         
         Spacer(modifier = Modifier.height(12.dp))
@@ -336,7 +332,7 @@ fun FileManagerDashboard() {
             title = "البحث عن الملفات",
             description = "بحث سريع وفعال",
             icon = Icons.Default.Search,
-            color = CyberOmegaColors.AccentGreen
+            color = Color(0xFF00FF00) // Green
         )
         
         Spacer(modifier = Modifier.height(12.dp))
@@ -345,7 +341,7 @@ fun FileManagerDashboard() {
             title = "معالجة الملفات",
             description = "تعديل ونسخ ودمج",
             icon = Icons.Default.Edit,
-            color = CyberOmegaColors.AccentMagenta
+            color = electricViolet
         )
     }
 }
@@ -357,28 +353,24 @@ fun SecurityCard(
     icon: ImageVector,
     color: Color
 ) {
-    Card(
+    DarkForgeXCard(
         modifier = Modifier
             .fillMaxWidth()
             .clickable { }
-            .height(100.dp),
-        shape = RoundedCornerShape(12.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = CyberOmegaColors.SurfaceLight
-        )
+            .height(100.dp)
     ) {
         Row(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp),
+                .padding(DarkForgeXSpacing.lg),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Box(
                 modifier = Modifier
-                    .size(56.dp)
+                    .size(DarkForgeXSizes.iconXLarge)
                     .background(
-                        color = color.copy(alpha = 0.1f),
-                        shape = RoundedCornerShape(8.dp)
+                        color = color.copy(alpha = 0.2f),
+                        shape = RoundedCornerShape(DarkForgeXCornerRadius.sm)
                     ),
                 contentAlignment = Alignment.Center
             ) {
@@ -386,25 +378,25 @@ fun SecurityCard(
                     imageVector = icon,
                     contentDescription = title,
                     tint = color,
-                    modifier = Modifier.size(28.dp)
+                    modifier = Modifier.size(DarkForgeXSizes.iconLarge)
                 )
             }
             
-            Spacer(modifier = Modifier.width(16.dp))
+            Spacer(modifier = Modifier.width(DarkForgeXSpacing.lg))
             
             Column(
                 modifier = Modifier.weight(1f)
             ) {
                 Text(
                     text = title,
-                    fontSize = 14.sp,
+                    fontSize = DarkForgeXTypography.titleSmall.fontSize,
                     fontWeight = FontWeight.Bold,
-                    color = CyberOmegaColors.TextPrimary
+                    color = Color.White
                 )
                 Text(
                     text = description,
-                    fontSize = 12.sp,
-                    color = CyberOmegaColors.TextSecondary
+                    fontSize = DarkForgeXTypography.bodySmall.fontSize,
+                    color = cyberGray
                 )
             }
             
@@ -412,7 +404,7 @@ fun SecurityCard(
                 imageVector = Icons.Filled.ChevronRight,
                 contentDescription = "Navigate",
                 tint = color,
-                modifier = Modifier.size(24.dp)
+                modifier = Modifier.size(DarkForgeXSizes.iconMedium)
             )
         }
     }
@@ -427,31 +419,31 @@ fun CustomNavigationBar(
     NavigationBar(
         modifier = modifier
             .fillMaxWidth()
-            .background(CyberOmegaColors.SurfaceDark),
-        containerColor = CyberOmegaColors.SurfaceDark,
-        contentColor = CyberOmegaColors.TextPrimary
+            .background(darkCharcoal),
+        containerColor = darkCharcoal,
+        contentColor = neonCyan
     ) {
         NavigationBarItem(
-            icon = { Icon(Icons.Default.Security, contentDescription = "Security") },
-            label = { Text("الأمان") },
+            icon = { Icon(Icons.Default.Security, contentDescription = "Security", tint = if (selectedTab == 0) neonCyan else cyberGray) },
+            label = { Text("الأمان", fontSize = DarkForgeXTypography.labelSmall.fontSize, color = if (selectedTab == 0) neonCyan else cyberGray) },
             selected = selectedTab == 0,
             onClick = { onTabSelected(0) }
         )
         NavigationBarItem(
-            icon = { Icon(Icons.Default.Search, contentDescription = "Search") },
-            label = { Text("البحث") },
+            icon = { Icon(Icons.Default.Search, contentDescription = "Search", tint = if (selectedTab == 1) neonCyan else cyberGray) },
+            label = { Text("البحث", fontSize = DarkForgeXTypography.labelSmall.fontSize, color = if (selectedTab == 1) neonCyan else cyberGray) },
             selected = selectedTab == 1,
             onClick = { onTabSelected(1) }
         )
         NavigationBarItem(
-            icon = { Icon(Icons.Default.VideoLibrary, contentDescription = "Video") },
-            label = { Text("الفيديو") },
+            icon = { Icon(Icons.Default.VideoLibrary, contentDescription = "Video", tint = if (selectedTab == 2) neonCyan else cyberGray) },
+            label = { Text("الفيديو", fontSize = DarkForgeXTypography.labelSmall.fontSize, color = if (selectedTab == 2) neonCyan else cyberGray) },
             selected = selectedTab == 2,
             onClick = { onTabSelected(2) }
         )
         NavigationBarItem(
-            icon = { Icon(Icons.Default.Folder, contentDescription = "Files") },
-            label = { Text("الملفات") },
+            icon = { Icon(Icons.Default.Folder, contentDescription = "Files", tint = if (selectedTab == 3) neonCyan else cyberGray) },
+            label = { Text("الملفات", fontSize = DarkForgeXTypography.labelSmall.fontSize, color = if (selectedTab == 3) neonCyan else cyberGray) },
             selected = selectedTab == 3,
             onClick = { onTabSelected(3) }
         )
