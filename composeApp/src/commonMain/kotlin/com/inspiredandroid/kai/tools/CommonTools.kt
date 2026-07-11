@@ -233,6 +233,7 @@ object CommonTools {
     )
 
     val commonToolDefinitions = listOf(
+        AiPulseResearchTool.toolInfo,
         WebSearchTool.toolInfo,
         YouTubeResearchTool.toolInfo,
         localTimeToolInfo,
@@ -275,6 +276,9 @@ object CommonTools {
         }
         if (appSettings.isToolEnabled(ipLocationTool.schema.name)) {
             add(ipLocationTool)
+        }
+        if (appSettings.isToolEnabled(AiPulseResearchTool.schema.name)) {
+            add(AiPulseResearchTool)
         }
         if (appSettings.isToolEnabled(WebSearchTool.schema.name)) {
             add(WebSearchTool)
