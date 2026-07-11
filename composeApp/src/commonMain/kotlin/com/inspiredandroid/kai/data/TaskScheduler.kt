@@ -38,7 +38,7 @@ class TaskScheduler(
     private val backgroundDispatcher: CoroutineContext = getBackgroundDispatcher(),
 ) {
     private companion object {
-        const val POLL_INTERVAL_MS = 60_000L
+        const val POLL_INTERVAL_MS = 120_000L // Increased to 2 minutes to reduce background load on Linux
         const val MAX_BACKOFF_MS = 3_600_000L // 1 hour
         const val HEARTBEAT_CONTEXT_COUNT = 3
 

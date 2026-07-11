@@ -93,7 +93,7 @@ import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
 private const val MAX_TOOL_ITERATIONS = 15
-private const val MIN_TOOL_DISPLAY_MS = 2000L
+private const val MIN_TOOL_DISPLAY_MS = 0L
 private const val MAX_REPEATED_TOOL_CALLS = 3
 private const val MAX_API_RETRIES = 2
 private const val MAX_HEARTBEAT_MESSAGES = 50

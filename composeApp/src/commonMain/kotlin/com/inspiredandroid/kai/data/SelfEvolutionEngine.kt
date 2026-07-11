@@ -17,7 +17,7 @@ class SelfEvolutionEngine(private val appSettings: AppSettings) {
      */
     suspend fun verifyAndMonitor(code: String, onProgress: (String) -> Unit): Boolean {
         onProgress("Initiating code inspection...")
-        delay(100)
+        // delay(100) (Removed artificial delay)
         
         // 1. التدقيق اللغوي والبرمجي (Static Analysis)
         onProgress("Performing static analysis and security audit...")
@@ -28,7 +28,7 @@ class SelfEvolutionEngine(private val appSettings: AppSettings) {
         
         // 2. محاكاة التنفيذ (Dry Run)
         onProgress("Simulating execution in virtualized environment...")
-        delay(200)
+        // delay(200) (Removed artificial delay)
         
         // 3. التحقق من المنطق (Logic Verification)
         onProgress("Verifying logic and performance metrics...")

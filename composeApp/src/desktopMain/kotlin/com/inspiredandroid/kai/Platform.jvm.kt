@@ -97,7 +97,7 @@ actual val defaultUiScale: Float = run {
 
 actual val isEmailSupported: Boolean = true
 
-actual val isSmsSupported: Boolean = false
+actual val isSmsSupported: Boolean = true // Enabled for Linux support
 
 actual val isNotificationsSupported: Boolean = false
 
