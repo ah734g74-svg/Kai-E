@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.inspiredandroid.kai"
+    namespace = "com.darkforge.x"
     compileSdk =
         libs.versions.android.compileSdk
             .get()
@@ -13,7 +13,7 @@ android {
     ndkVersion = "29.0.14206865"
 
     defaultConfig {
-        applicationId = "com.inspiredandroid.kai"
+        applicationId = "com.darkforge.x"
         minSdk =
             libs.versions.android.minSdk
                 .get()

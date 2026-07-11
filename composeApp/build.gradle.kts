@@ -17,7 +17,7 @@ composeCompiler {
 
 kotlin {
     androidLibrary {
-        namespace = "com.inspiredandroid.kai.shared"
+        namespace = "com.darkforge.x.shared"
         compileSdk =
             libs.versions.android.compileSdk
                 .get()
@@ -40,7 +40,7 @@ kotlin {
         iosTarget.binaries.framework {
             baseName = "ComposeApp"
             isStatic = false
-            binaryOption("bundleId", "com.inspiredandroid.kai.composeapp")
+            binaryOption("bundleId", "com.darkforge.x.composeapp")
         }
     }
 
@@ -156,7 +156,7 @@ kotlin {
 
 compose.desktop {
     application {
-        mainClass = "com.inspiredandroid.kai.MainKt"
+        mainClass = "com.darkforge.x.MainKt"
 
         buildTypes.release.proguard {
             configurationFiles.from(
@@ -167,7 +167,7 @@ compose.desktop {
 
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb, TargetFormat.Rpm, TargetFormat.AppImage)
-            packageName = "Kai"
+            packageName = "DarkForge-X"
             packageVersion = libs.versions.appVersion.get()
 
             macOS {
@@ -217,7 +217,7 @@ class VersionGeneratorPlugin : Plugin<Project> {
             versionFile.parentFile?.mkdirs()
             versionFile.writeText(
                 """
-                package com.inspiredandroid.kai
+                package com.darkforge.x
 
                 object Version {
                     const val appVersion = "$appVersion"

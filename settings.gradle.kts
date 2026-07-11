@@ -1,4 +1,4 @@
-rootProject.name = "Kai"
+rootProject.name = "DarkForge-X"
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 pluginManagement {
